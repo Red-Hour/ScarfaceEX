@@ -1,0 +1,2022 @@
+$se10_se11 = 0;
+$se11_se10 = 0;
+
+function se10_se11()
+{
+	$se11_se10 = 1;
+	
+	Schedule("1", "GlobalSoundPlay", "se11", "se11", "Front_Introduction_Quotes_Done");
+	
+	return;
+}
+
+function Front_Introduction_Quotes_Done()
+{
+	if ($se10_se11 && !$se11_se10)
+	{
+		$gPauseCharacters = 0;
+		$gPauseVehicles = 0;
+		$se10_se11 = 0;
+		
+		if ("MainCharacter".Schedule("1", "stxphahdkkj", "0"))
+			Schedule("1", "GlobalSoundPlay", "se10", "se10", "se10_se11");
+			
+		return;
+	}
+	
+	if ($se11_se10 && !$se10_se11)
+	{
+		$se11_se10 = 0;
+		
+		if ("MainCharacter".Schedule("1", "stxopmddkok"))
+		{
+			Schedule("1", "HUD_SetGlobalSafeToActivate", "1");
+			Schedule("1", "SoundFadeoutMix", "duck_phonecall");
+		}
+		
+		return;
+	}
+	
+	$gPauseCharacters = 0;
+	$gPauseVehicles = 0;
+	
+	Schedule("1", "HUD_SetGlobalSafeToActivate", "1");
+	Schedule("1", "SoundFadeoutMix", "duck_phonecall");
+	
+	return;
+}
+
+function MNIS_MA1A_Pedros_Intro_Cam()
+{
+	$gPauseCharacters = 1;
+	$gPauseVehicles = 1;
+	$se10_se11 = 1;
+	
+	Schedule("1235", "GlobalSoundPlay", "se_narrator", "front_intro_01", "Front_Introduction_Quotes_Done");
+	Schedule("753", "SoundFadeinMix", "duck_phonecall");
+	Schedule("573", "GlobalSoundRequestMusic", "S09Music", "success", "nonlooping", "immediate", "10", "0");
+	
+	return;
+}
+
+function MNIS_MA2A_Cabana_Intro_Cam()
+{
+	$gPauseCharacters = 1;
+	$gPauseVehicles = 1;
+	
+	Schedule("1235", "GlobalSoundPlay", "se_narrator", "front_intro_02", "Front_Introduction_Quotes_Done");
+	Schedule("753", "SoundFadeinMix", "duck_phonecall");
+	Schedule("573", "GlobalSoundRequestMusic", "A22Music", "combat_break", "nonlooping", "immediate", "10", "0");
+	
+	return;
+}
+
+function MNIS_MA3A_Oakley_Intro_Cam()
+{
+	$gPauseCharacters = 1;
+	$gPauseVehicles = 1;
+	
+	Schedule("1235", "GlobalSoundPlay", "se_narrator", "front_intro_03", "Front_Introduction_Quotes_Done");
+	Schedule("753", "SoundFadeinMix", "duck_phonecall");
+	Schedule("573", "GlobalSoundRequestMusic", "FrontMusic", "trav_car_04_fin", "nonlooping", "immediate", "10", "0");
+	
+	return;
+}
+
+function MNIS_SHA_0_Havana_Intro()
+{
+	Schedule("1235", "GlobalSoundPlay", "se_narrator", "front_intro_04", "Front_Introduction_Quotes_Done");
+	Schedule("753", "SoundFadeinMix", "duck_phonecall");
+	
+	return;
+}
+
+function MNIS_MB1A_Ogrady_Intro_Cam()
+{
+	$gPauseCharacters = 1;
+	$gPauseVehicles = 1;
+	
+	Schedule("1235", "GlobalSoundPlay", "se_narrator", "front_intro_05", "Front_Introduction_Quotes_Done");
+	Schedule("753", "SoundFadeinMix", "duck_phonecall");
+	Schedule("573", "GlobalSoundRequestMusic", "FrontMusic", "trav_car_gen_fin", "nonlooping", "immediate", "10", "0");
+	
+	return;
+}
+
+function MNIS_MB2A_Fidel_Intro_Cam()
+{
+	$gPauseCharacters = 1;
+	$gPauseVehicles = 1;
+	
+	Schedule("1235", "GlobalSoundPlay", "se_narrator", "front_intro_06", "Front_Introduction_Quotes_Done");
+	Schedule("753", "SoundFadeinMix", "duck_phonecall");
+	Schedule("573", "GlobalSoundRequestMusic", "StorehouseMusic", "mission_success", "nonlooping", "immediate", "10", "0");
+	
+	return;
+}
+
+function MNIS_MB3A_Ugin_Intro_Cam()
+{
+	$gPauseCharacters = 1;
+	$gPauseVehicles = 1;
+	
+	Schedule("1235", "GlobalSoundPlay", "se_narrator", "front_intro_07", "Front_Introduction_Quotes_Done");
+	Schedule("753", "SoundFadeinMix", "duck_phonecall");
+	Schedule("573", "GlobalSoundRequestMusic", "S09Music", "success", "nonlooping", "immediate", "10", "0");
+	
+	return;
+}
+
+function MNIS_MB4A_Babylon_Intro_Cam()
+{
+	$gPauseCharacters = 1;
+	$gPauseVehicles = 1;
+	
+	Schedule("1235", "GlobalSoundPlay", "se_narrator", "front_intro_08", "Front_Introduction_Quotes_Done");
+	Schedule("753", "SoundFadeinMix", "duck_phonecall");
+	Schedule("573", "GlobalSoundRequestMusic", "A22Music", "combat_break", "nonlooping", "immediate", "10", "0");
+	
+	return;
+}
+
+function MNIS_SHB_0_Marina_Intro()
+{
+	Schedule("1235", "GlobalSoundPlay", "se_narrator", "front_intro_09", "Front_Introduction_Quotes_Done");
+	Schedule("753", "SoundFadeinMix", "duck_phonecall");
+	
+	return;
+}
+
+function MNIS_MC1A_Angel_Dust_Intro_Cam()
+{
+	$gPauseCharacters = 1;
+	$gPauseVehicles = 1;
+	
+	Schedule("1235", "GlobalSoundPlay", "se_narrator", "front_intro_10", "Front_Introduction_Quotes_Done");
+	Schedule("753", "SoundFadeinMix", "duck_phonecall");
+	Schedule("573", "GlobalSoundRequestMusic", "FrontMusic", "trav_car_04_fin", "nonlooping", "immediate", "10", "0");
+	
+	return;
+}
+
+function MNIS_MC2A_Whippet_Intro_Cam()
+{
+	$gPauseCharacters = 1;
+	$gPauseVehicles = 1;
+	
+	Schedule("1235", "GlobalSoundPlay", "se_narrator", "front_intro_11", "Front_Introduction_Quotes_Done");
+	Schedule("753", "SoundFadeinMix", "duck_phonecall");
+	Schedule("573", "GlobalSoundRequestMusic", "StorehouseMusic", "mission_success", "nonlooping", "immediate", "10", "0");
+	
+	return;
+}
+
+function MNIS_MC3A_Peninsula_Intro_Cam()
+{
+	$gPauseCharacters = 1;
+	$gPauseVehicles = 1;
+	
+	Schedule("1235", "GlobalSoundPlay", "se_narrator", "front_intro_12", "Front_Introduction_Quotes_Done");
+	Schedule("753", "SoundFadeinMix", "duck_phonecall");
+	Schedule("573", "GlobalSoundRequestMusic", "FrontMusic", "trav_car_gen_fin", "nonlooping", "immediate", "10", "0");
+	
+	return;
+}
+
+function MNIS_MC4A_Stein_Intro_Cam()
+{
+	$gPauseCharacters = 1;
+	$gPauseVehicles = 1;
+	
+	Schedule("1235", "GlobalSoundPlay", "se_narrator", "front_intro_13", "Front_Introduction_Quotes_Done");
+	Schedule("753", "SoundFadeinMix", "duck_phonecall");
+	Schedule("573", "GlobalSoundRequestMusic", "StorehouseMusic", "mission_success", "nonlooping", "immediate", "10", "0");
+	
+	return;
+}
+
+function MNIS_MC5A_Cocos_Intro_Cam()
+{
+	$gPauseCharacters = 1;
+	$gPauseVehicles = 1;
+	
+	Schedule("1235", "GlobalSoundPlay", "se_narrator", "front_intro_14", "Front_Introduction_Quotes_Done");
+	Schedule("753", "SoundFadeinMix", "duck_phonecall");
+	Schedule("573", "GlobalSoundRequestMusic", "S09Music", "success", "nonlooping", "immediate", "10", "0");
+	
+	return;
+}
+
+function MNIS_SHC_0_Rail_Yard_Intro()
+{
+	Schedule("1235", "GlobalSoundPlay", "se_narrator", "front_intro_15", "Front_Introduction_Quotes_Done");
+	Schedule("753", "SoundFadeinMix", "duck_phonecall");
+	
+	return;
+}
+
+function MNIS_MD1A_Macau_Intro_Cam()
+{
+	$gPauseCharacters = 1;
+	$gPauseVehicles = 1;
+	
+	Schedule("1235", "GlobalSoundPlay", "se_narrator", "front_intro_16", "Front_Introduction_Quotes_Done");
+	Schedule("753", "SoundFadeinMix", "duck_phonecall");
+	Schedule("573", "GlobalSoundRequestMusic", "A22Music", "combat_break", "nonlooping", "immediate", "10", "0");
+	
+	return;
+}
+
+function MNIS_MD2A_Chi_Peso_Intro_Cam()
+{
+	$gPauseCharacters = 1;
+	$gPauseVehicles = 1;
+	
+	Schedule("1235", "GlobalSoundPlay", "se_narrator", "front_intro_17", "Front_Introduction_Quotes_Done");
+	Schedule("753", "SoundFadeinMix", "duck_phonecall");
+	Schedule("573", "GlobalSoundRequestMusic", "FrontMusic", "trav_car_04_fin", "nonlooping", "immediate", "10", "0");
+	
+	return;
+}
+
+function MNIS_MD3A_Swansong_Intro_Cam()
+{
+	$gPauseCharacters = 1;
+	$gPauseVehicles = 1;
+	
+	Schedule("1235", "GlobalSoundPlay", "se_narrator", "front_intro_18", "Front_Introduction_Quotes_Done");
+	Schedule("753", "SoundFadeinMix", "duck_phonecall");
+	Schedule("573", "GlobalSoundRequestMusic", "FrontMusic", "trav_car_gen_fin", "nonlooping", "immediate", "10", "0");
+	
+	return;
+}
+
+function MNIS_MD4A_Sunray_Intro_Cam()
+{
+	%frontIntro = "front_intro_" @ stxidgjogdl("19", "22");
+	
+	$gPauseCharacters = 1;
+	$gPauseVehicles = 1;
+	
+	Schedule("1235", "GlobalSoundPlay", "se_narrator", %frontIntro, "Front_Introduction_Quotes_Done");
+	Schedule("753", "SoundFadeinMix", "duck_phonecall");
+	Schedule("573", "GlobalSoundRequestMusic", "S09Music", "success", "nonlooping", "immediate", "10", "0");
+	
+	return;
+}
+
+function MNIS_SHD_0_Shoreline_Intro()
+{
+	Schedule("1235", "GlobalSoundPlay", "se_narrator", "front_intro_23", "Front_Introduction_Quotes_Done");
+	Schedule("753", "SoundFadeinMix", "duck_phonecall");
+	
+	return;
+}
+
+function NIS_159_plantation_purchase()
+{
+	Schedule("6332", "PCM_PlayPhoneCall", "sosa_phonecall", "sosa_phonecall_09");
+	Schedule("19283", "HUD_SetGlobalSafeToActivate", "1");
+	
+	return;
+}
+
+function NIS_09b_banking()
+{
+	
+	
+	return;
+}
+
+function NIS_10_jerry()
+{
+	Schedule("1", "HUD_SetGlobalSafeToActivate", "0");
+	Schedule("1", "SetBlockingActionMap", "1");
+	Schedule("777", "GlobalSoundPlay", "se09", "se09");
+	Schedule("9777", "PCM_PlayPhoneCall", "se54", "se54");
+	Schedule("4222", "SetBlockingActionMap", "0");
+	Schedule("54325", "HUD_SetGlobalSafeToActivate", "1");
+	
+	return;
+}
+
+function NIS_124_frontal_assualt()
+{
+	
+	
+	return;
+}
+
+function NIS_06_felix()
+{
+	
+	
+	return;
+}
+
+function NIS_05_vice()
+{
+	
+	
+	return;
+}
+
+function NIS_04_coco()
+{
+	
+	
+	return;
+}
+
+function MNIS_MB2A_0_Tapes_Aquired()
+{
+	
+	
+	return;
+}
+
+function ScarfaceEX_Backup_Script_Reset_Locomotion_Type_Name()
+{
+	"MainCharacter".isInvincible = 0;
+	"MainCharacter".Schedule("1", "stxopmddkok");
+	
+	ScheduleAlways("2", "HUD_SetGlobalSafeToActivate", "1");
+	ScheduleAlways("3", "SoundFadeoutMix", "duck_phonecall");
+		
+	if (FindObject("mcp_Assassin"))
+		FindObject("mcp_Assassin").isInvincible = "1";
+	
+	if (FindObject("mcp_Driver"))
+		FindObject("mcp_Driver").isInvincible = "1";
+	
+	if (FindObject("mcp_Enforcer"))
+		FindObject("mcp_Enforcer").isInvincible = "1";
+		
+	if (FindObject("char_Temp_Dying_Henchman"))
+		FindObject("char_Temp_Dying_Henchman").isInvincible = "1";
+		
+	if (FindObject("char_Temp_M_Henchman_05"))
+		FindObject("char_Temp_M_Henchman_05").isInvincible = "1";
+	
+	return;
+}
+
+function ScarfaceEX_Cop_Bribe_Script_Reset_Locomotion_Type_Name()
+{
+	"MainCharacter".isInvincible = 0;
+	"MainCharacter".Schedule("1", "stxopmddkok");
+	
+	ScheduleAlways("2", "HUD_SetGlobalSafeToActivate", "1");
+	
+	return;
+}
+
+function ScarfaceEX_Cop_Bribe_Script_Reset_Locomotion_Type()
+{
+	%deductionRate = (stxogkpfppp() >= stxadlbimkj()) ? -stxadlbimkj() : -stxogkpfppp();
+	%bonusRate = (stxogkpfppp() >= stxadlbimkj()) ? stxadlbimkj() : stxogkpfppp();
+	
+	"MainCharacter".isInvincible = 0;
+	"MainCharacter".Schedule("1", "stxopmddkok");
+	
+	ScheduleAlways("2", "DBChangeCleanCash", %deductionRate); 
+	ScheduleAlways("3", "DBChangeCopHeat", %deductionRate);
+	ScheduleAlways("4", "DBChangeBalls", %bonusRate);
+	ScheduleAlways("5", "HUD_SetGlobalSafeToActivate", "1");
+	
+	return;
+}
+
+function ScarfaceEX_Backup_Script_hangupphone_00()
+{
+	%triggerValid13 = (!NISIsPlaying() && !HUD_IsGamePaused() && !MGM_GetMissionActive() && !IsMainCharacterKilledOrFlaggedForOnKilled() && !IsTeleporting());
+	%triggerValid14 = ($gPauseCharacters == 0 && $gPauseVehicles == 0 && %triggerValid13);
+	
+	if (%triggerValid14)
+	{
+		ScheduleAlways("1", "GlobalSoundPlay", "tony", "hangupphone_00", "ScarfaceEX_Backup_Script_Reset_Locomotion_Type_Name");
+		
+		return;
+	}
+	
+	ScarfaceEX_Backup_Script_Reset_Locomotion_Type_Name();
+	
+	return;
+}
+
+function se_tony_henchman_05()
+{
+	%triggerValid11 = (!NISIsPlaying() && !HUD_IsGamePaused() && !MGM_GetMissionActive() && !IsMainCharacterKilledOrFlaggedForOnKilled() && !IsTeleporting());
+	%triggerValid12 = ($gPauseCharacters == 0 && $gPauseVehicles == 0 && %triggerValid11);
+	
+	if (%triggerValid12)
+	{
+		if (!FindObject("char_Temp_M_Henchman_05"))
+		{
+			ScheduleAlways("1", "GlobalSoundPlay", "se_tony_henchman_05", "backupcall_00", "ScarfaceEX_Backup_Script_hangupphone_00");
+			
+			%charTempMHenchman05 = new AmbientSpawnObject();
+			%charTempMHenchman05.desiredSpawnCount = "1";
+			%charTempMHenchman05.spawnscriptclass = "DWHenchman";
+			%charTempMHenchman05.spawnname = "char_Temp_M_Henchman_05";
+			%charTempMHenchman05.spawntemplate = "CharTemp_M_Henchman05";
+			%charTempMHenchman05.usegangpriority = "1";
+			%charTempMHenchman05.spawnweapon = "WeaponTemplateMAC10Upgrade3";
+			%charTempMHenchman05.cleanuppolicy = "ON_SPAWNER_DELETE";
+			%charTempMHenchman05.deleteWhenCulled = "1";
+			%charTempMHenchman05.spawndistance = "67";
+			%charTempMHenchman05.totalSpawnCount = "1";
+			
+			return;
+		}
+		
+		ScarfaceEX_Backup_Script_hangupphone_00();
+		
+		return;
+	}
+	
+	ScarfaceEX_Backup_Script_Reset_Locomotion_Type_Name();
+	
+	return;
+}
+
+function se_tony_henchman_04()
+{
+	%triggerValid9 = (!NISIsPlaying() && !HUD_IsGamePaused() && !MGM_GetMissionActive() && !IsMainCharacterKilledOrFlaggedForOnKilled() && !IsTeleporting());
+	%triggerValid10 = ($gPauseCharacters == 0 && $gPauseVehicles == 0 && %triggerValid9);
+	
+	if (%triggerValid10)
+	{
+		if (!FindObject("char_Temp_Dying_Henchman"))
+		{
+			ScheduleAlways("1", "GlobalSoundPlay", "se_tony_henchman_04", "backupcall_00", "se_tony_henchman_05");
+			
+			%charTempDyingHenchman = new AmbientSpawnObject();
+			%charTempDyingHenchman.desiredSpawnCount = "1";
+			%charTempDyingHenchman.spawnscriptclass = "DWHenchman";
+			%charTempDyingHenchman.spawnname = "char_Temp_Dying_Henchman";
+			%charTempDyingHenchman.spawntemplate = "CharTemp_Dying_Henchman";
+			%charTempDyingHenchman.usegangpriority = "1";
+			%charTempDyingHenchman.spawnweapon = "WeaponTemplateUziUpgrade3";
+			%charTempDyingHenchman.cleanuppolicy = "ON_SPAWNER_DELETE";
+			%charTempDyingHenchman.deleteWhenCulled = "1";
+			%charTempDyingHenchman.spawndistance = "67";
+			%charTempDyingHenchman.totalSpawnCount = "1";
+			
+			return;
+		}
+		
+		se_tony_henchman_05();
+		
+		return;
+	}
+	
+	ScarfaceEX_Backup_Script_Reset_Locomotion_Type_Name();
+	
+	return;
+}
+
+function se_tony_henchman_03()
+{
+	%triggerValid7 = (!NISIsPlaying() && !HUD_IsGamePaused() && !MGM_GetMissionActive() && !IsMainCharacterKilledOrFlaggedForOnKilled() && !IsTeleporting());
+	%triggerValid8 = ($gPauseCharacters == 0 && $gPauseVehicles == 0 && %triggerValid7);
+	
+	if (%triggerValid8)
+	{
+		if (!FindObject("mcp_Enforcer"))
+		{	
+			ScheduleAlways("1", "GlobalSoundPlay", "se_tony_henchman_03", "backupcall_00", "se_tony_henchman_04");
+			
+			%mcpEnforcer = new AmbientSpawnObject();
+			%mcpEnforcer.desiredSpawnCount = "1";
+			%mcpEnforcer.spawnscriptclass = "DWHenchman";
+			%mcpEnforcer.spawnname = "mcp_Enforcer";
+			%mcpEnforcer.spawntemplate = "MCP_Enforcer";
+			%mcpEnforcer.usegangpriority = "1";
+			%mcpEnforcer.spawnweapon = "WeaponTemplateDesertEagle";
+			%mcpEnforcer.cleanuppolicy = "ON_SPAWNER_DELETE";
+			%mcpEnforcer.deleteWhenCulled = "1";
+			%mcpEnforcer.spawndistance = "67";
+			%mcpEnforcer.totalSpawnCount = "1";
+			
+			return;
+		}
+		
+		se_tony_henchman_04();
+		
+		return;
+	}
+	
+	ScarfaceEX_Backup_Script_Reset_Locomotion_Type_Name();
+	
+	return;
+}
+
+function se_tony_henchman_02()
+{
+	%triggerValid5 = (!NISIsPlaying() && !HUD_IsGamePaused() && !MGM_GetMissionActive() && !IsMainCharacterKilledOrFlaggedForOnKilled() && !IsTeleporting());
+	%triggerValid6 = ($gPauseCharacters == 0 && $gPauseVehicles == 0 && %triggerValid5);
+	
+	if (%triggerValid6)
+	{
+		if (!FindObject("mcp_Driver"))
+		{
+			ScheduleAlways("1", "GlobalSoundPlay", "se_tony_henchman_02", "backupcall_00", "se_tony_henchman_03");
+			
+			%mcpDriver = new AmbientSpawnObject();
+			%mcpDriver.desiredSpawnCount = "1";
+			%mcpDriver.spawnscriptclass = "DWHenchman";
+			%mcpDriver.spawnname = "mcp_Driver";
+			%mcpDriver.spawntemplate = "MCP_Driver";
+			%mcpDriver.usegangpriority = "1";
+			%mcpDriver.spawnweapon = "WeaponTemplateM16Mortar";
+			%mcpDriver.cleanuppolicy = "ON_SPAWNER_DELETE";
+			%mcpDriver.deleteWhenCulled = "1";
+			%mcpDriver.spawndistance = "67";
+			%mcpDriver.totalSpawnCount = "1";
+			
+			return;
+		}
+		
+		se_tony_henchman_03();
+		
+		return;
+	}
+	
+	ScarfaceEX_Backup_Script_Reset_Locomotion_Type_Name();
+	
+	return;
+}
+
+function se_tony_henchman_01()
+{
+	%triggerValid3 = (!NISIsPlaying() && !HUD_IsGamePaused() && !MGM_GetMissionActive() && !IsMainCharacterKilledOrFlaggedForOnKilled() && !IsTeleporting());
+	%triggerValid4 = ($gPauseCharacters == 0 && $gPauseVehicles == 0 && %triggerValid3);
+	
+	if (%triggerValid4)
+	{
+		if (!FindObject("mcp_Assassin"))
+		{
+			ScheduleAlways("1", "GlobalSoundPlay", "se_tony_henchman_01", "backupcall_00", "se_tony_henchman_02");
+			
+			%mcpAssassin = new AmbientSpawnObject();
+			%mcpAssassin.desiredSpawnCount = "1";
+			%mcpAssassin.spawnscriptclass = "DWHenchman";
+			%mcpAssassin.spawnname = "mcp_Assassin";
+			%mcpAssassin.spawntemplate = "MCP_Assassin";
+			%mcpAssassin.usegangpriority = "1";
+			%mcpAssassin.spawnweapon = "WeaponTemplateAK47Upgrade2";
+			%mcpAssassin.cleanuppolicy = "ON_SPAWNER_DELETE";
+			%mcpAssassin.deleteWhenCulled = "1";
+			%mcpAssassin.spawndistance = "67";
+			%mcpAssassin.totalSpawnCount = "1";
+			
+			return;
+		}
+		
+		se_tony_henchman_02();
+		
+		return;
+	}
+	
+	ScarfaceEX_Backup_Script_Reset_Locomotion_Type_Name();
+	
+	return;
+}
+
+function call_backup_00()
+{
+	%triggerValid1 = (!NISIsPlaying() && !HUD_IsGamePaused() && !MGM_GetMissionActive() && !IsMainCharacterKilledOrFlaggedForOnKilled() && !IsTeleporting());
+	%triggerValid2 = ($gPauseCharacters == 0 && $gPauseVehicles == 0 && %triggerValid1);
+	
+	if (%triggerValid2)
+	{
+		ScheduleAlways("1", "GlobalSoundPlay", "tony", "call_backup_00", "se_tony_henchman_01");
+		
+		return;
+	}
+	
+	ScarfaceEX_Backup_Script_Reset_Locomotion_Type_Name();
+	
+	return;
+}
+
+function ScarfaceEX_Backup_Script()
+{
+	%triggerValid = (!NISIsPlaying() && !HUD_IsGamePaused() && !MGM_GetMissionActive() && !IsMainCharacterKilledOrFlaggedForOnKilled() && !IsTeleporting());
+	%triggerValid0 = ($gPauseCharacters == 0 && $gPauseVehicles == 0 && %triggerValid);
+	%triggerInvalid = (FindObject("mcp_Assassin") && FindObject("mcp_Driver") && FindObject("mcp_Enforcer") && FindObject("char_Temp_Dying_Henchman"));
+	%triggerInvalid0 = (FindObject("char_Temp_M_Henchman_05") && %triggerInvalid);
+
+	if (%triggerInvalid0)
+		return;
+
+	if (%triggerValid0)
+	{
+		"MainCharacter".isInvincible = 1;
+		
+		ScheduleAlways("1", "HUD_SetGlobalSafeToActivate", "0");
+		ScheduleAlways("2", "GlobalSoundPlay", "tony", "answerphone_00", "call_backup_00");
+		
+		"MainCharacter".Schedule("3", "stxphahdkkj", "0");
+		
+		return;
+	}
+
+	return;
+}
+
+function duck_phone_call()
+{
+	Schedule("1", "SoundFadeoutMix", "duck_phonecall");
+	
+	return;
+}
+
+function duck_cinematics()
+{
+	Schedule("1", "SoundFadeoutMix", "duck_cinematics");
+	
+	return;
+}
+
+function ScarfaceEX_Combat_Tutorial_Objective_18_Script()
+{
+	Schedule("1", "SoundFadeinMix", "duck_phonecall");
+	Schedule("2", "GlobalSoundPlay", "se_narrator", "objective_18", "duck_phone_call");
+
+	return;
+}
+
+function ScarfaceEX_Combat_Tutorial_Objective_16_Script()
+{
+	Schedule("3571", "SoundFadeinMix", "duck_cinematics");
+	Schedule("3572", "GlobalSoundPlay", "se_narrator", "objective_16", "duck_cinematics");
+
+	return;
+}
+
+function ScarfaceEX_Combat_Tutorial_Objective_15_Script()
+{
+	Schedule("1", "SoundFadeinMix", "duck_phonecall");
+	Schedule("2", "GlobalSoundPlay", "se_narrator", "objective_15", "duck_phone_call");
+
+	return;
+}
+
+function ScarfaceEX_Combat_Tutorial_Objective_14_Script()
+{
+	Schedule("1", "SoundFadeinMix", "duck_phonecall");
+	Schedule("2", "GlobalSoundPlay", "se_narrator", "objective_14", "duck_phone_call");
+
+	return;
+}
+
+function ScarfaceEX_Combat_Tutorial_Objective_13_Script()
+{
+	Schedule("1", "SoundFadeinMix", "duck_phonecall");
+	Schedule("2", "GlobalSoundPlay", "se_narrator", "objective_13", "duck_phone_call");
+
+	return;
+}
+
+function ScarfaceEX_Combat_Tutorial_Objective_12_Script()
+{
+	Schedule("1", "SoundFadeinMix", "duck_phonecall");
+	Schedule("2", "GlobalSoundPlay", "se_narrator", "objective_12", "duck_phone_call");
+
+	return;
+}
+
+function ScarfaceEX_Combat_Tutorial_Objective_11_Script()
+{
+	Schedule("1", "SoundFadeinMix", "duck_phonecall");
+	Schedule("2", "GlobalSoundPlay", "se_narrator", "objective_11", "duck_phone_call");
+
+	return;
+}
+
+function ScarfaceEX_Combat_Tutorial_Objective_10_Script()
+{
+	Schedule("1", "SoundFadeinMix", "duck_phonecall");
+	Schedule("2", "GlobalSoundPlay", "se_narrator", "objective_10", "duck_phone_call");
+
+	return;
+}
+
+function ScarfaceEX_Combat_Tutorial_Objective_9_Script()
+{
+	Schedule("1", "SoundFadeinMix", "duck_phonecall");
+	Schedule("2", "GlobalSoundPlay", "se_narrator", "objective_09", "duck_phone_call");
+
+	return;
+}
+
+function ScarfaceEX_Combat_Tutorial_Objective_8_Script()
+{
+	Schedule("1", "SoundFadeinMix", "duck_phonecall");
+	Schedule("2", "GlobalSoundPlay", "se_narrator", "objective_08", "duck_phone_call");
+
+	return;
+}
+
+function ScarfaceEX_Combat_Tutorial_Objective_7_Script()
+{
+	Schedule("1", "SoundFadeinMix", "duck_phonecall");
+	Schedule("2", "GlobalSoundPlay", "se_narrator", "objective_07", "duck_phone_call");
+
+	return;
+}
+
+function ScarfaceEX_Combat_Tutorial_Objective_6_Script()
+{
+	Schedule("1", "SoundFadeinMix", "duck_phonecall");
+	Schedule("2", "GlobalSoundPlay", "se_narrator", "objective_06", "duck_phone_call");
+
+	return;
+}
+
+function ScarfaceEX_Combat_Tutorial_Objective_5_Script()
+{
+	Schedule("1", "SoundFadeinMix", "duck_phonecall");
+	Schedule("2", "GlobalSoundPlay", "se_narrator", "objective_05", "duck_phone_call");
+
+	return;
+}
+
+function ScarfaceEX_Combat_Tutorial_Objective_4_Script()
+{
+	Schedule("1", "SoundFadeinMix", "duck_phonecall");
+	Schedule("2", "GlobalSoundPlay", "se_narrator", "objective_04", "duck_phone_call");
+
+	return;
+}
+
+function ScarfaceEX_Combat_Tutorial_Objective_3_Script()
+{
+	Schedule("1", "SoundFadeinMix", "duck_phonecall");
+	Schedule("2", "GlobalSoundPlay", "se_narrator", "objective_03", "duck_phone_call");
+
+	return;
+}
+
+function ScarfaceEX_Combat_Tutorial_Objective_2_Script()
+{
+	Schedule("1", "SoundFadeinMix", "duck_phonecall");
+	Schedule("2", "GlobalSoundPlay", "se_narrator", "objective_02", "duck_phone_call");
+
+	return;
+}
+
+function objective_17()
+{
+	Schedule("2357", "GlobalSoundPlay", "se_narrator", "objective_17", "duck_phone_call");
+	
+	return;
+}
+
+function ScarfaceEX_Combat_Tutorial_Objectives_1_To_17_Script()
+{
+	Schedule("1", "SoundFadeinMix", "duck_phonecall");
+	Schedule("1235", "GlobalSoundPlay", "se_narrator", "objective_01", "objective_17");
+
+	return;
+}
+
+function ScarfaceEX_Cop_Bribe_Script_hangupphone_00()
+{
+	%triggerValid0 = ((stxogkpfppp() > 0) && (stxadlbimkj() > 0) && !HUD_IsGamePaused() && !IsMainCharacterKilledOrFlaggedForOnKilled());
+	%triggerValid1 = (!IsTeleporting() && !NISIsPlaying() && $gPauseCharacters == 0 && $gPauseVehicles == 0 && !MGM_GetMissionActive());
+	%triggerValid = (%triggerValid0 && %triggerValid1);
+	
+	if (%triggerValid)
+	{
+		ScheduleAlways("1", "GlobalSoundPlay", "tony", "hangupphone_00", "ScarfaceEX_Cop_Bribe_Script_Reset_Locomotion_Type");
+		
+		return;
+	}
+	
+	ScarfaceEX_Cop_Bribe_Script_Reset_Locomotion_Type_Name();
+	
+	return;
+}
+
+function ScarfaceEX_Cop_Bribe_Script_miami_cop_02_donutbribedone_00()
+{
+	%triggerValid0 = ((stxogkpfppp() > 0) && (stxadlbimkj() > 0) && !HUD_IsGamePaused() && !IsMainCharacterKilledOrFlaggedForOnKilled());
+	%triggerValid1 = (!IsTeleporting() && !NISIsPlaying() && $gPauseCharacters == 0 && $gPauseVehicles == 0 && !MGM_GetMissionActive());
+	%triggerValid = (%triggerValid0 && %triggerValid1);
+	
+	if (%triggerValid)
+	{
+		ScheduleAlways("1", "GlobalSoundPlay", "miami_cop_02", "donutbribedone_00", "ScarfaceEX_Cop_Bribe_Script_hangupphone_00");
+		
+		return;
+	}
+	
+	ScarfaceEX_Cop_Bribe_Script_Reset_Locomotion_Type_Name();
+	
+	return;
+}
+
+function ScarfaceEX_Cop_Bribe_Script_cop_heat_pay_down_00()
+{
+	%triggerValid0 = ((stxogkpfppp() > 0) && (stxadlbimkj() > 0) && !HUD_IsGamePaused() && !IsMainCharacterKilledOrFlaggedForOnKilled());
+	%triggerValid1 = (!IsTeleporting() && !NISIsPlaying() && $gPauseCharacters == 0 && $gPauseVehicles == 0 && !MGM_GetMissionActive());
+	%triggerValid = (%triggerValid0 && %triggerValid1);
+	
+	if (%triggerValid)
+	{
+		ScheduleAlways("1", "GlobalSoundPlay", "tony", "cop_heat_pay_down_00", "ScarfaceEX_Cop_Bribe_Script_miami_cop_02_donutbribedone_00");
+		
+		return;
+	}
+	
+	ScarfaceEX_Cop_Bribe_Script_Reset_Locomotion_Type_Name();
+	
+	return;
+}
+
+function ScarfaceEX_Cop_Bribe_Script_miami_cop_01_donutbribedone_00()
+{
+	%triggerValid0 = ((stxogkpfppp() > 0) && (stxadlbimkj() > 0) && !HUD_IsGamePaused() && !IsMainCharacterKilledOrFlaggedForOnKilled());
+	%triggerValid1 = (!IsTeleporting() && !NISIsPlaying() && $gPauseCharacters == 0 && $gPauseVehicles == 0 && !MGM_GetMissionActive());
+	%triggerValid = (%triggerValid0 && %triggerValid1);
+	
+	if (%triggerValid)
+	{
+		ScheduleAlways("1", "GlobalSoundPlay", "miami_cop_01", "donutbribedone_00", "ScarfaceEX_Cop_Bribe_Script_cop_heat_pay_down_00");
+		
+		return;
+	}
+	
+	ScarfaceEX_Cop_Bribe_Script_Reset_Locomotion_Type_Name();
+	
+	return;
+}
+
+function ScarfaceEX_Cop_Bribe_Script_accept_00()
+{
+	%triggerValid0 = ((stxogkpfppp() > 0) && (stxadlbimkj() > 0) && !HUD_IsGamePaused() && !IsMainCharacterKilledOrFlaggedForOnKilled());
+	%triggerValid1 = (!IsTeleporting() && !NISIsPlaying() && $gPauseCharacters == 0 && $gPauseVehicles == 0 && !MGM_GetMissionActive());
+	%triggerValid = (%triggerValid0 && %triggerValid1);
+	
+	if (%triggerValid)
+	{
+		ScheduleAlways("1", "GlobalSoundPlay", "tony", "accept_00", "ScarfaceEX_Cop_Bribe_Script_miami_cop_01_donutbribedone_00");
+		
+		return;
+	}
+	
+	ScarfaceEX_Cop_Bribe_Script_Reset_Locomotion_Type_Name();
+	
+	return;
+}
+
+function ScarfaceEX_Cop_Bribe_Script_white_vice_cop_bribe_00_2()
+{
+	%triggerValid0 = ((stxogkpfppp() > 0) && (stxadlbimkj() > 0) && !HUD_IsGamePaused() && !IsMainCharacterKilledOrFlaggedForOnKilled());
+	%triggerValid1 = (!IsTeleporting() && !NISIsPlaying() && $gPauseCharacters == 0 && $gPauseVehicles == 0 && !MGM_GetMissionActive());
+	%triggerValid = (%triggerValid0 && %triggerValid1);
+	
+	if (%triggerValid)
+	{
+		ScheduleAlways("1", "GlobalSoundPlay", "white_vice_cop", "cop_bribe_00", "ScarfaceEX_Cop_Bribe_Script_accept_00");
+		
+		return;
+	}
+	
+	ScarfaceEX_Cop_Bribe_Script_Reset_Locomotion_Type_Name();
+	
+	return;
+}
+
+function ScarfaceEX_Cop_Bribe_Script_convince_00()
+{
+	%triggerValid0 = ((stxogkpfppp() > 0) && (stxadlbimkj() > 0) && !HUD_IsGamePaused() && !IsMainCharacterKilledOrFlaggedForOnKilled());
+	%triggerValid1 = (!IsTeleporting() && !NISIsPlaying() && $gPauseCharacters == 0 && $gPauseVehicles == 0 && !MGM_GetMissionActive());
+	%triggerValid = (%triggerValid0 && %triggerValid1);
+	
+	if (%triggerValid)
+	{
+		ScheduleAlways("1", "GlobalSoundPlay", "tony", "convince_00", "ScarfaceEX_Cop_Bribe_Script_white_vice_cop_bribe_00_2");
+		
+		return;
+	}
+	
+	ScarfaceEX_Cop_Bribe_Script_Reset_Locomotion_Type_Name();
+	
+	return;
+}
+
+function ScarfaceEX_Cop_Bribe_Script_white_vice_cop_bribe_00_1()
+{
+	%triggerValid0 = ((stxogkpfppp() > 0) && (stxadlbimkj() > 0) && !HUD_IsGamePaused() && !IsMainCharacterKilledOrFlaggedForOnKilled());
+	%triggerValid1 = (!IsTeleporting() && !NISIsPlaying() && $gPauseCharacters == 0 && $gPauseVehicles == 0 && !MGM_GetMissionActive());
+	%triggerValid = (%triggerValid0 && %triggerValid1);
+	
+	if (%triggerValid)
+	{
+		ScheduleAlways("1", "GlobalSoundPlay", "white_vice_cop", "cop_bribe_00", "ScarfaceEX_Cop_Bribe_Script_convince_00");
+		
+		return;
+	}
+	
+	ScarfaceEX_Cop_Bribe_Script_Reset_Locomotion_Type_Name();
+	
+	return;
+}
+
+function ScarfaceEX_Cop_Bribe_Script_decline_00()
+{
+	%triggerValid0 = ((stxogkpfppp() > 0) && (stxadlbimkj() > 0) && !HUD_IsGamePaused() && !IsMainCharacterKilledOrFlaggedForOnKilled());
+	%triggerValid1 = (!IsTeleporting() && !NISIsPlaying() && $gPauseCharacters == 0 && $gPauseVehicles == 0 && !MGM_GetMissionActive());
+	%triggerValid = (%triggerValid0 && %triggerValid1);
+	
+	if (%triggerValid)
+	{
+		ScheduleAlways("1", "GlobalSoundPlay", "tony", "decline_00", "ScarfaceEX_Cop_Bribe_Script_white_vice_cop_bribe_00_1");
+		
+		return;
+	}
+	
+	ScarfaceEX_Cop_Bribe_Script_Reset_Locomotion_Type_Name();
+	
+	return;
+}
+
+function ScarfaceEX_Cop_Bribe_Script_white_vice_cop_bribe_00_0()
+{
+	%triggerValid0 = ((stxogkpfppp() > 0) && (stxadlbimkj() > 0) && !HUD_IsGamePaused() && !IsMainCharacterKilledOrFlaggedForOnKilled());
+	%triggerValid1 = (!IsTeleporting() && !NISIsPlaying() && $gPauseCharacters == 0 && $gPauseVehicles == 0 && !MGM_GetMissionActive());
+	%triggerValid = (%triggerValid0 && %triggerValid1);
+	
+	if (%triggerValid)
+	{
+		ScheduleAlways("1", "GlobalSoundPlay", "white_vice_cop", "cop_bribe_00", "ScarfaceEX_Cop_Bribe_Script_decline_00");
+		
+		return;
+	}
+	
+	ScarfaceEX_Cop_Bribe_Script_Reset_Locomotion_Type_Name();
+	
+	return;
+}
+
+function ScarfaceEX_Cop_Bribe_Script_buy_off_00()
+{
+	%triggerValid0 = ((stxogkpfppp() > 0) && (stxadlbimkj() > 0) && !HUD_IsGamePaused() && !IsMainCharacterKilledOrFlaggedForOnKilled());
+	%triggerValid1 = (!IsTeleporting() && !NISIsPlaying() && $gPauseCharacters == 0 && $gPauseVehicles == 0 && !MGM_GetMissionActive());
+	%triggerValid = (%triggerValid0 && %triggerValid1);
+	
+	if (%triggerValid)
+	{
+		ScheduleAlways("1", "GlobalSoundPlay", "tony", "buy_off_00", "ScarfaceEX_Cop_Bribe_Script_white_vice_cop_bribe_00_0");
+		
+		return;
+	}
+	
+	ScarfaceEX_Cop_Bribe_Script_Reset_Locomotion_Type_Name();
+	
+	return;
+}
+
+function ScarfaceEX_Cop_Bribe_Script_white_vice_cop_bribe_00_()
+{
+	%triggerValid0 = ((stxogkpfppp() > 0) && (stxadlbimkj() > 0) && !HUD_IsGamePaused() && !IsMainCharacterKilledOrFlaggedForOnKilled());
+	%triggerValid1 = (!IsTeleporting() && !NISIsPlaying() && $gPauseCharacters == 0 && $gPauseVehicles == 0 && !MGM_GetMissionActive());
+	%triggerValid = (%triggerValid0 && %triggerValid1);
+	
+	if (%triggerValid)
+	{
+		ScheduleAlways("1", "GlobalSoundPlay", "white_vice_cop", "cop_bribe_00", "ScarfaceEX_Cop_Bribe_Script_buy_off_00");
+		
+		return;
+	}
+	
+	ScarfaceEX_Cop_Bribe_Script_Reset_Locomotion_Type_Name();
+	
+	return;
+}
+
+function ScarfaceEX_Cop_Bribe_Script_buy_off_approach_00()
+{
+	%triggerValid0 = ((stxogkpfppp() > 0) && (stxadlbimkj() > 0) && !HUD_IsGamePaused() && !IsMainCharacterKilledOrFlaggedForOnKilled());
+	%triggerValid1 = (!IsTeleporting() && !NISIsPlaying() && $gPauseCharacters == 0 && $gPauseVehicles == 0 && !MGM_GetMissionActive());
+	%triggerValid = (%triggerValid0 && %triggerValid1);
+	
+	if (%triggerValid)
+	{
+		ScheduleAlways("1", "GlobalSoundPlay", "tony", "buy_off_approach_00", "ScarfaceEX_Cop_Bribe_Script_white_vice_cop_bribe_00_");
+		
+		return;
+	}
+	
+	ScarfaceEX_Cop_Bribe_Script_Reset_Locomotion_Type_Name();
+	
+	return;
+}
+
+function ScarfaceEX_Cop_Bribe_Script_white_vice_cop_bribe_00()
+{
+	%triggerValid0 = ((stxogkpfppp() > 0) && (stxadlbimkj() > 0) && !HUD_IsGamePaused() && !IsMainCharacterKilledOrFlaggedForOnKilled());
+	%triggerValid1 = (!IsTeleporting() && !NISIsPlaying() && $gPauseCharacters == 0 && $gPauseVehicles == 0 && !MGM_GetMissionActive());
+	%triggerValid = (%triggerValid0 && %triggerValid1);
+	
+	if (%triggerValid)
+	{
+		ScheduleAlways("1", "GlobalSoundPlay", "white_vice_cop", "cop_bribe_00", "ScarfaceEX_Cop_Bribe_Script_buy_off_approach_00");
+		
+		return;
+	}
+	
+	ScarfaceEX_Cop_Bribe_Script_Reset_Locomotion_Type_Name();
+	
+	return;
+}
+
+function ScarfaceEX_Cop_Bribe_Script_greet_00()
+{
+	%triggerValid0 = ((stxogkpfppp() > 0) && (stxadlbimkj() > 0) && !HUD_IsGamePaused() && !IsMainCharacterKilledOrFlaggedForOnKilled());
+	%triggerValid1 = (!IsTeleporting() && !NISIsPlaying() && $gPauseCharacters == 0 && $gPauseVehicles == 0 && !MGM_GetMissionActive());
+	%triggerValid = (%triggerValid0 && %triggerValid1);
+	
+	if (%triggerValid)
+	{
+		ScheduleAlways("1", "GlobalSoundPlay", "tony", "greet_00", "ScarfaceEX_Cop_Bribe_Script_white_vice_cop_bribe_00");
+		
+		return;
+	}
+	
+	ScarfaceEX_Cop_Bribe_Script_Reset_Locomotion_Type_Name();
+	
+	return;
+}
+
+function ScarfaceEX_Cop_Bribe_Script_miami_cop_02_donutbribe_00()
+{
+	%triggerValid0 = ((stxogkpfppp() > 0) && (stxadlbimkj() > 0) && !HUD_IsGamePaused() && !IsMainCharacterKilledOrFlaggedForOnKilled());
+	%triggerValid1 = (!IsTeleporting() && !NISIsPlaying() && $gPauseCharacters == 0 && $gPauseVehicles == 0 && !MGM_GetMissionActive());
+	%triggerValid = (%triggerValid0 && %triggerValid1);
+	
+	if (%triggerValid)
+	{
+		ScheduleAlways("1", "GlobalSoundPlay", "miami_cop_02", "donutbribe_00", "ScarfaceEX_Cop_Bribe_Script_greet_00");
+		
+		return;
+	}
+	
+	ScarfaceEX_Cop_Bribe_Script_Reset_Locomotion_Type_Name();
+	
+	return;
+}
+
+function ScarfaceEX_Cop_Bribe_Script_genmale_friend_00()
+{
+	%triggerValid0 = ((stxogkpfppp() > 0) && (stxadlbimkj() > 0) && !HUD_IsGamePaused() && !IsMainCharacterKilledOrFlaggedForOnKilled());
+	%triggerValid1 = (!IsTeleporting() && !NISIsPlaying() && $gPauseCharacters == 0 && $gPauseVehicles == 0 && !MGM_GetMissionActive());
+	%triggerValid = (%triggerValid0 && %triggerValid1);
+	
+	if (%triggerValid)
+	{
+		ScheduleAlways("1", "GlobalSoundPlay", "tony", "genmale_friend_00", "ScarfaceEX_Cop_Bribe_Script_miami_cop_02_donutbribe_00");
+		
+		return;
+	}
+	
+	ScarfaceEX_Cop_Bribe_Script_Reset_Locomotion_Type_Name();
+	
+	return;
+}
+
+function ScarfaceEX_Cop_Bribe_Script_miami_cop_01_donutbribe_00()
+{
+	%triggerValid0 = ((stxogkpfppp() > 0) && (stxadlbimkj() > 0) && !HUD_IsGamePaused() && !IsMainCharacterKilledOrFlaggedForOnKilled());
+	%triggerValid1 = (!IsTeleporting() && !NISIsPlaying() && $gPauseCharacters == 0 && $gPauseVehicles == 0 && !MGM_GetMissionActive());
+	%triggerValid = (%triggerValid0 && %triggerValid1);
+	
+	if (%triggerValid)
+	{
+		ScheduleAlways("1", "GlobalSoundPlay", "miami_cop_01", "donutbribe_00", "ScarfaceEX_Cop_Bribe_Script_genmale_friend_00");
+		
+		return;
+	}
+	
+	ScarfaceEX_Cop_Bribe_Script_Reset_Locomotion_Type_Name();
+	
+	return;
+}
+
+function ScarfaceEX_Cop_Bribe_Script_answerphone_00()
+{
+	%triggerValid0 = ((stxogkpfppp() > 0) && (stxadlbimkj() > 0) && !HUD_IsGamePaused() && !IsMainCharacterKilledOrFlaggedForOnKilled());
+	%triggerValid1 = (!IsTeleporting() && !NISIsPlaying() && $gPauseCharacters == 0 && $gPauseVehicles == 0 && !MGM_GetMissionActive());
+	%triggerValid = (%triggerValid0 && %triggerValid1);
+	
+	if (%triggerValid)
+	{
+		ScheduleAlways("1", "GlobalSoundPlay", "tony", "answerphone_00", "ScarfaceEX_Cop_Bribe_Script_miami_cop_01_donutbribe_00");
+		
+		return;
+	}
+	
+	ScarfaceEX_Cop_Bribe_Script_Reset_Locomotion_Type_Name();
+	
+	return;
+}
+
+function ScarfaceEX_Cop_Bribe_Script_white_vice_cop_bribe_00_3()
+{
+	%triggerValid0 = ((stxogkpfppp() > 0) && (stxadlbimkj() > 0) && !HUD_IsGamePaused() && !IsMainCharacterKilledOrFlaggedForOnKilled());
+	%triggerValid1 = (!IsTeleporting() && !NISIsPlaying() && $gPauseCharacters == 0 && $gPauseVehicles == 0 && !MGM_GetMissionActive());
+	%triggerValid = (%triggerValid0 && %triggerValid1);
+	
+	if (%triggerValid)
+	{
+		ScheduleAlways("1", "GlobalSoundPlay", "white_vice_cop", "cop_bribe_00", "ScarfaceEX_Cop_Bribe_Script_answerphone_00");
+		
+		return;
+	}
+	
+	ScarfaceEX_Cop_Bribe_Script_Reset_Locomotion_Type_Name();
+	
+	return;
+}
+
+function ScarfaceEX_Gang_Bribe_Script_Reset_Locomotion_Type_Name()
+{
+	"MainCharacter".isInvincible = 0;
+	"MainCharacter".Schedule("1", "stxopmddkok");
+	
+	ScheduleAlways("2", "HUD_SetGlobalSafeToActivate", "1");
+	
+	return;
+}
+
+function ScarfaceEX_Gang_Bribe_Script_Reset_Locomotion_Type()
+{
+	%deductionRate = (stxogkpfppp() >= stxlahgjnip()) ? -stxlahgjnip() : -stxogkpfppp();
+	%bonusRate = (stxogkpfppp() >= stxlahgjnip()) ? stxlahgjnip() : stxogkpfppp();
+	
+	"MainCharacter".isInvincible = 0;
+	"MainCharacter".Schedule("1", "stxopmddkok");
+	
+	ScheduleAlways("2", "DBChangeCleanCash", %deductionRate); 
+	ScheduleAlways("3", "DBChangeGangHeat", %deductionRate);
+	ScheduleAlways("4", "DBChangeBalls", %bonusRate);
+	ScheduleAlways("5", "HUD_SetGlobalSafeToActivate", "1");
+	
+	return;
+}
+
+function ScarfaceEX_Gang_Bribe_Script_hangupphone_00()
+{
+	%triggerValid0 = ((stxogkpfppp() > 0) && (stxlahgjnip() > 0.0) && !HUD_IsGamePaused() && !IsMainCharacterKilledOrFlaggedForOnKilled());
+	%triggerValid1 = (!IsTeleporting() && !NISIsPlaying() && $gPauseCharacters == 0 && $gPauseVehicles == 0 && !MGM_GetMissionActive());
+	%triggerValid = (%triggerValid0 && %triggerValid1);
+	
+	if (%triggerValid)
+	{
+		ScheduleAlways("1", "GlobalSoundPlay", "tony", "hangupphone_00", "ScarfaceEX_Gang_Bribe_Script_Reset_Locomotion_Type");
+		
+		return;
+	}
+	
+	ScarfaceEX_Gang_Bribe_Script_Reset_Locomotion_Type_Name();
+	
+	return;
+}
+
+function ScarfaceEX_Gang_Bribe_Script_miami_cop_02_donutbribedone_00()
+{
+	%triggerValid0 = ((stxogkpfppp() > 0) && (stxlahgjnip() > 0.0) && !HUD_IsGamePaused() && !IsMainCharacterKilledOrFlaggedForOnKilled());
+	%triggerValid1 = (!IsTeleporting() && !NISIsPlaying() && $gPauseCharacters == 0 && $gPauseVehicles == 0 && !MGM_GetMissionActive());
+	%triggerValid = (%triggerValid0 && %triggerValid1);
+	
+	if (%triggerValid)
+	{
+		ScheduleAlways("1", "GlobalSoundPlay", "miami_cop_02", "donutbribedone_00", "ScarfaceEX_Gang_Bribe_Script_hangupphone_00");
+		
+		return;
+	}
+	
+	ScarfaceEX_Gang_Bribe_Script_Reset_Locomotion_Type_Name();
+	
+	return;
+}
+
+function ScarfaceEX_Gang_Bribe_Script_gang_heat_pay_down_00()
+{
+	%triggerValid0 = ((stxogkpfppp() > 0) && (stxlahgjnip() > 0.0) && !HUD_IsGamePaused() && !IsMainCharacterKilledOrFlaggedForOnKilled());
+	%triggerValid1 = (!IsTeleporting() && !NISIsPlaying() && $gPauseCharacters == 0 && $gPauseVehicles == 0 && !MGM_GetMissionActive());
+	%triggerValid = (%triggerValid0 && %triggerValid1);
+	
+	if (%triggerValid)
+	{
+		ScheduleAlways("1", "GlobalSoundPlay", "tony", "gang_heat_pay_down_00", "ScarfaceEX_Gang_Bribe_Script_miami_cop_02_donutbribedone_00");
+		
+		return;
+	}
+	
+	ScarfaceEX_Gang_Bribe_Script_Reset_Locomotion_Type_Name();
+	
+	return;
+}
+
+function ScarfaceEX_Gang_Bribe_Script_miami_cop_01_donutbribedone_00()
+{
+	%triggerValid0 = ((stxogkpfppp() > 0) && (stxlahgjnip() > 0.0) && !HUD_IsGamePaused() && !IsMainCharacterKilledOrFlaggedForOnKilled());
+	%triggerValid1 = (!IsTeleporting() && !NISIsPlaying() && $gPauseCharacters == 0 && $gPauseVehicles == 0 && !MGM_GetMissionActive());
+	%triggerValid = (%triggerValid0 && %triggerValid1);
+	
+	if (%triggerValid)
+	{
+		ScheduleAlways("1", "GlobalSoundPlay", "miami_cop_01", "donutbribedone_00", "ScarfaceEX_Gang_Bribe_Script_gang_heat_pay_down_00");
+		
+		return;
+	}
+	
+	ScarfaceEX_Gang_Bribe_Script_Reset_Locomotion_Type_Name();
+	
+	return;
+}
+
+function ScarfaceEX_Gang_Bribe_Script_accept_00()
+{
+	%triggerValid0 = ((stxogkpfppp() > 0) && (stxlahgjnip() > 0.0) && !HUD_IsGamePaused() && !IsMainCharacterKilledOrFlaggedForOnKilled());
+	%triggerValid1 = (!IsTeleporting() && !NISIsPlaying() && $gPauseCharacters == 0 && $gPauseVehicles == 0 && !MGM_GetMissionActive());
+	%triggerValid = (%triggerValid0 && %triggerValid1);
+	
+	if (%triggerValid)
+	{
+		ScheduleAlways("1", "GlobalSoundPlay", "tony", "accept_00", "ScarfaceEX_Gang_Bribe_Script_miami_cop_01_donutbribedone_00");
+		
+		return;
+	}
+	
+	ScarfaceEX_Gang_Bribe_Script_Reset_Locomotion_Type_Name();
+	
+	return;
+}
+
+function ScarfaceEX_Gang_Bribe_Script_white_vice_cop_bribe_00_2()
+{
+	%triggerValid0 = ((stxogkpfppp() > 0) && (stxlahgjnip() > 0.0) && !HUD_IsGamePaused() && !IsMainCharacterKilledOrFlaggedForOnKilled());
+	%triggerValid1 = (!IsTeleporting() && !NISIsPlaying() && $gPauseCharacters == 0 && $gPauseVehicles == 0 && !MGM_GetMissionActive());
+	%triggerValid = (%triggerValid0 && %triggerValid1);
+	
+	if (%triggerValid)
+	{
+		ScheduleAlways("1", "GlobalSoundPlay", "white_vice_cop", "cop_bribe_00", "ScarfaceEX_Gang_Bribe_Script_accept_00");
+		
+		return;
+	}
+	
+	ScarfaceEX_Gang_Bribe_Script_Reset_Locomotion_Type_Name();
+	
+	return;
+}
+
+function ScarfaceEX_Gang_Bribe_Script_convince_00()
+{
+	%triggerValid0 = ((stxogkpfppp() > 0) && (stxlahgjnip() > 0.0) && !HUD_IsGamePaused() && !IsMainCharacterKilledOrFlaggedForOnKilled());
+	%triggerValid1 = (!IsTeleporting() && !NISIsPlaying() && $gPauseCharacters == 0 && $gPauseVehicles == 0 && !MGM_GetMissionActive());
+	%triggerValid = (%triggerValid0 && %triggerValid1);
+	
+	if (%triggerValid)
+	{
+		ScheduleAlways("1", "GlobalSoundPlay", "tony", "convince_00", "ScarfaceEX_Gang_Bribe_Script_white_vice_cop_bribe_00_2");
+		
+		return;
+	}
+	
+	ScarfaceEX_Gang_Bribe_Script_Reset_Locomotion_Type_Name();
+	
+	return;
+}
+
+function ScarfaceEX_Gang_Bribe_Script_white_vice_cop_bribe_00_1()
+{
+	%triggerValid0 = ((stxogkpfppp() > 0) && (stxlahgjnip() > 0.0) && !HUD_IsGamePaused() && !IsMainCharacterKilledOrFlaggedForOnKilled());
+	%triggerValid1 = (!IsTeleporting() && !NISIsPlaying() && $gPauseCharacters == 0 && $gPauseVehicles == 0 && !MGM_GetMissionActive());
+	%triggerValid = (%triggerValid0 && %triggerValid1);
+	
+	if (%triggerValid)
+	{
+		ScheduleAlways("1", "GlobalSoundPlay", "white_vice_cop", "cop_bribe_00", "ScarfaceEX_Gang_Bribe_Script_convince_00");
+		
+		return;
+	}
+	
+	ScarfaceEX_Gang_Bribe_Script_Reset_Locomotion_Type_Name();
+	
+	return;
+}
+
+function ScarfaceEX_Gang_Bribe_Script_decline_00()
+{
+	%triggerValid0 = ((stxogkpfppp() > 0) && (stxlahgjnip() > 0.0) && !HUD_IsGamePaused() && !IsMainCharacterKilledOrFlaggedForOnKilled());
+	%triggerValid1 = (!IsTeleporting() && !NISIsPlaying() && $gPauseCharacters == 0 && $gPauseVehicles == 0 && !MGM_GetMissionActive());
+	%triggerValid = (%triggerValid0 && %triggerValid1);
+	
+	if (%triggerValid)
+	{
+		ScheduleAlways("1", "GlobalSoundPlay", "tony", "decline_00", "ScarfaceEX_Gang_Bribe_Script_white_vice_cop_bribe_00_1");
+		
+		return;
+	}
+	
+	ScarfaceEX_Gang_Bribe_Script_Reset_Locomotion_Type_Name();
+	
+	return;
+}
+
+function ScarfaceEX_Gang_Bribe_Script_white_vice_cop_bribe_00_0()
+{
+	%triggerValid0 = ((stxogkpfppp() > 0) && (stxlahgjnip() > 0.0) && !HUD_IsGamePaused() && !IsMainCharacterKilledOrFlaggedForOnKilled());
+	%triggerValid1 = (!IsTeleporting() && !NISIsPlaying() && $gPauseCharacters == 0 && $gPauseVehicles == 0 && !MGM_GetMissionActive());
+	%triggerValid = (%triggerValid0 && %triggerValid1);
+	
+	if (%triggerValid)
+	{
+		ScheduleAlways("1", "GlobalSoundPlay", "white_vice_cop", "cop_bribe_00", "ScarfaceEX_Gang_Bribe_Script_decline_00");
+		
+		return;
+	}
+	
+	ScarfaceEX_Gang_Bribe_Script_Reset_Locomotion_Type_Name();
+	
+	return;
+}
+
+function ScarfaceEX_Gang_Bribe_Script_buy_off_00()
+{
+	%triggerValid0 = ((stxogkpfppp() > 0) && (stxlahgjnip() > 0.0) && !HUD_IsGamePaused() && !IsMainCharacterKilledOrFlaggedForOnKilled());
+	%triggerValid1 = (!IsTeleporting() && !NISIsPlaying() && $gPauseCharacters == 0 && $gPauseVehicles == 0 && !MGM_GetMissionActive());
+	%triggerValid = (%triggerValid0 && %triggerValid1);
+	
+	if (%triggerValid)
+	{
+		ScheduleAlways("1", "GlobalSoundPlay", "tony", "buy_off_00", "ScarfaceEX_Gang_Bribe_Script_white_vice_cop_bribe_00_0");
+		
+		return;
+	}
+	
+	ScarfaceEX_Gang_Bribe_Script_Reset_Locomotion_Type_Name();
+	
+	return;
+}
+
+function ScarfaceEX_Gang_Bribe_Script_white_vice_cop_bribe_00_()
+{
+	%triggerValid0 = ((stxogkpfppp() > 0) && (stxlahgjnip() > 0.0) && !HUD_IsGamePaused() && !IsMainCharacterKilledOrFlaggedForOnKilled());
+	%triggerValid1 = (!IsTeleporting() && !NISIsPlaying() && $gPauseCharacters == 0 && $gPauseVehicles == 0 && !MGM_GetMissionActive());
+	%triggerValid = (%triggerValid0 && %triggerValid1);
+	
+	if (%triggerValid)
+	{
+		ScheduleAlways("1", "GlobalSoundPlay", "white_vice_cop", "cop_bribe_00", "ScarfaceEX_Gang_Bribe_Script_buy_off_00");
+		
+		return;
+	}
+	
+	ScarfaceEX_Gang_Bribe_Script_Reset_Locomotion_Type_Name();
+	
+	return;
+}
+
+function ScarfaceEX_Gang_Bribe_Script_buy_off_approach_00()
+{
+	%triggerValid0 = ((stxogkpfppp() > 0) && (stxlahgjnip() > 0.0) && !HUD_IsGamePaused() && !IsMainCharacterKilledOrFlaggedForOnKilled());
+	%triggerValid1 = (!IsTeleporting() && !NISIsPlaying() && $gPauseCharacters == 0 && $gPauseVehicles == 0 && !MGM_GetMissionActive());
+	%triggerValid = (%triggerValid0 && %triggerValid1);
+	
+	if (%triggerValid)
+	{
+		ScheduleAlways("1", "GlobalSoundPlay", "tony", "buy_off_approach_00", "ScarfaceEX_Gang_Bribe_Script_white_vice_cop_bribe_00_");
+		
+		return;
+	}
+	
+	ScarfaceEX_Gang_Bribe_Script_Reset_Locomotion_Type_Name();
+	
+	return;
+}
+
+function ScarfaceEX_Gang_Bribe_Script_white_vice_cop_bribe_00()
+{
+	%triggerValid0 = ((stxogkpfppp() > 0) && (stxlahgjnip() > 0.0) && !HUD_IsGamePaused() && !IsMainCharacterKilledOrFlaggedForOnKilled());
+	%triggerValid1 = (!IsTeleporting() && !NISIsPlaying() && $gPauseCharacters == 0 && $gPauseVehicles == 0 && !MGM_GetMissionActive());
+	%triggerValid = (%triggerValid0 && %triggerValid1);
+	
+	if (%triggerValid)
+	{
+		ScheduleAlways("1", "GlobalSoundPlay", "white_vice_cop", "cop_bribe_00", "ScarfaceEX_Gang_Bribe_Script_buy_off_approach_00");
+		
+		return;
+	}
+	
+	ScarfaceEX_Gang_Bribe_Script_Reset_Locomotion_Type_Name();
+	
+	return;
+}
+
+function ScarfaceEX_Gang_Bribe_Script_greet_00()
+{
+	%triggerValid0 = ((stxogkpfppp() > 0) && (stxlahgjnip() > 0.0) && !HUD_IsGamePaused() && !IsMainCharacterKilledOrFlaggedForOnKilled());
+	%triggerValid1 = (!IsTeleporting() && !NISIsPlaying() && $gPauseCharacters == 0 && $gPauseVehicles == 0 && !MGM_GetMissionActive());
+	%triggerValid = (%triggerValid0 && %triggerValid1);
+	
+	if (%triggerValid)
+	{
+		ScheduleAlways("1", "GlobalSoundPlay", "tony", "greet_00", "ScarfaceEX_Gang_Bribe_Script_white_vice_cop_bribe_00");
+		
+		return;
+	}
+	
+	ScarfaceEX_Gang_Bribe_Script_Reset_Locomotion_Type_Name();
+	
+	return;
+}
+
+function ScarfaceEX_Gang_Bribe_Script_miami_cop_02_donutbribe_00()
+{
+	%triggerValid0 = ((stxogkpfppp() > 0) && (stxlahgjnip() > 0.0) && !HUD_IsGamePaused() && !IsMainCharacterKilledOrFlaggedForOnKilled());
+	%triggerValid1 = (!IsTeleporting() && !NISIsPlaying() && $gPauseCharacters == 0 && $gPauseVehicles == 0 && !MGM_GetMissionActive());
+	%triggerValid = (%triggerValid0 && %triggerValid1);
+	
+	if (%triggerValid)
+	{
+		ScheduleAlways("1", "GlobalSoundPlay", "miami_cop_02", "donutbribe_00", "ScarfaceEX_Gang_Bribe_Script_greet_00");
+		
+		return;
+	}
+	
+	ScarfaceEX_Gang_Bribe_Script_Reset_Locomotion_Type_Name();
+	
+	return;
+}
+
+function ScarfaceEX_Gang_Bribe_Script_genmale_friend_00()
+{
+	%triggerValid0 = ((stxogkpfppp() > 0) && (stxlahgjnip() > 0.0) && !HUD_IsGamePaused() && !IsMainCharacterKilledOrFlaggedForOnKilled());
+	%triggerValid1 = (!IsTeleporting() && !NISIsPlaying() && $gPauseCharacters == 0 && $gPauseVehicles == 0 && !MGM_GetMissionActive());
+	%triggerValid = (%triggerValid0 && %triggerValid1);
+	
+	if (%triggerValid)
+	{
+		ScheduleAlways("1", "GlobalSoundPlay", "tony", "genmale_friend_00", "ScarfaceEX_Gang_Bribe_Script_miami_cop_02_donutbribe_00");
+		
+		return;
+	}
+	
+	ScarfaceEX_Gang_Bribe_Script_Reset_Locomotion_Type_Name();
+	
+	return;
+}
+
+function ScarfaceEX_Gang_Bribe_Script_miami_cop_01_donutbribe_00()
+{
+	%triggerValid0 = ((stxogkpfppp() > 0) && (stxlahgjnip() > 0.0) && !HUD_IsGamePaused() && !IsMainCharacterKilledOrFlaggedForOnKilled());
+	%triggerValid1 = (!IsTeleporting() && !NISIsPlaying() && $gPauseCharacters == 0 && $gPauseVehicles == 0 && !MGM_GetMissionActive());
+	%triggerValid = (%triggerValid0 && %triggerValid1);
+	
+	if (%triggerValid)
+	{
+		ScheduleAlways("1", "GlobalSoundPlay", "miami_cop_01", "donutbribe_00", "ScarfaceEX_Gang_Bribe_Script_genmale_friend_00");
+		
+		return;
+	}
+	
+	ScarfaceEX_Gang_Bribe_Script_Reset_Locomotion_Type_Name();
+	
+	return;
+}
+
+function ScarfaceEX_Gang_Bribe_Script_answerphone_00()
+{
+	%triggerValid0 = ((stxogkpfppp() > 0) && (stxlahgjnip() > 0.0) && !HUD_IsGamePaused() && !IsMainCharacterKilledOrFlaggedForOnKilled());
+	%triggerValid1 = (!IsTeleporting() && !NISIsPlaying() && $gPauseCharacters == 0 && $gPauseVehicles == 0 && !MGM_GetMissionActive());
+	%triggerValid = (%triggerValid0 && %triggerValid1);
+	
+	if (%triggerValid)
+	{
+		ScheduleAlways("1", "GlobalSoundPlay", "tony", "answerphone_00", "ScarfaceEX_Gang_Bribe_Script_miami_cop_01_donutbribe_00");
+		
+		return;
+	}
+	
+	ScarfaceEX_Gang_Bribe_Script_Reset_Locomotion_Type_Name();
+	
+	return;
+}
+
+function ScarfaceEX_Gang_Bribe_Script_white_vice_cop_bribe_00_3()
+{
+	%triggerValid0 = ((stxogkpfppp() > 0) && (stxlahgjnip() > 0.0) && !HUD_IsGamePaused() && !IsMainCharacterKilledOrFlaggedForOnKilled());
+	%triggerValid1 = (!IsTeleporting() && !NISIsPlaying() && $gPauseCharacters == 0 && $gPauseVehicles == 0 && !MGM_GetMissionActive());
+	%triggerValid = (%triggerValid0 && %triggerValid1);
+	
+	if (%triggerValid)
+	{
+		ScheduleAlways("1", "GlobalSoundPlay", "white_vice_cop", "cop_bribe_00", "ScarfaceEX_Gang_Bribe_Script_answerphone_00");
+		
+		return;
+	}
+	
+	ScarfaceEX_Gang_Bribe_Script_Reset_Locomotion_Type_Name();
+	
+	return;
+}
+
+function ScarfaceEX_Gang_Bribe_Script()
+{
+	%startingTriggerValid0 = ((stxogkpfppp() > 0) && (stxlahgjnip() > 0.0) && !HUD_IsGamePaused() && !IsMainCharacterKilledOrFlaggedForOnKilled());
+	%startingTriggerValid1 = (!IsTeleporting() && !NISIsPlaying() && $gPauseCharacters == 0 && $gPauseVehicles == 0 && !MGM_GetMissionActive());
+	%startingTriggerValid = (%startingTriggerValid0 && %startingTriggerValid1);
+
+	if (%startingTriggerValid)
+	{
+		"MainCharacter".isInvincible = 1;
+		
+		ScheduleAlways("1", "HUD_SetGlobalSafeToActivate", "0");
+		ScheduleAlways("2", "GlobalSoundPlay", "tony", "snorting_00", "ScarfaceEX_Gang_Bribe_Script_white_vice_cop_bribe_00_3");
+		
+		"MainCharacter".Schedule("3", "stxphahdkkj", "0");
+		
+		ScheduleAlways("4", "SoundFadeoutMix", "duck_phonecall");
+		
+		return;
+	}
+
+	ScarfaceEX_Gang_Bribe_Script_Reset_Locomotion_Type_Name();
+
+	return;
+}
+
+function ScarfaceEX_Cop_Bribe_Script()
+{
+	%startingTriggerValid0 = ((stxogkpfppp() > 0) && (stxadlbimkj() > 0) && !HUD_IsGamePaused() && !IsMainCharacterKilledOrFlaggedForOnKilled());
+	%startingTriggerValid1 = (!IsTeleporting() && !NISIsPlaying() && $gPauseCharacters == 0 && $gPauseVehicles == 0 && !MGM_GetMissionActive());
+	%startingTriggerValid = (%startingTriggerValid0 && %startingTriggerValid1);
+
+	if (%startingTriggerValid)
+	{
+		"MainCharacter".isInvincible = 1;
+		
+		ScheduleAlways("1", "HUD_SetGlobalSafeToActivate", "0");
+		ScheduleAlways("2", "GlobalSoundPlay", "tony", "snorting_00", "ScarfaceEX_Cop_Bribe_Script_white_vice_cop_bribe_00_3");
+		
+		"MainCharacter".Schedule("3", "stxphahdkkj", "0");
+		
+		ScheduleAlways("4", "SoundFadeoutMix", "duck_phonecall");
+		
+		return;
+	}
+	
+	ScarfaceEX_Cop_Bribe_Script_Reset_Locomotion_Type_Name();
+	
+	return;
+}
+
+function ScarfaceEX_Main_Character_Switching_Done_Script()
+{
+	"MainCharacter".isInvincible = 0;
+
+	ScheduleAlways("1", "SoundFadeoutMix", "duck_phonecall"); 
+	ScheduleAlways("2", "SetBlockingActionMap", "0"); 
+	ScheduleAlways("3", "HUD_SetGlobalSafeToActivate", "1");
+
+	return;
+}
+
+function ScarfaceEX_Main_Character_Switching_To_Valid_Package_Script()
+{
+	Schedule("1", "GlobalSoundRequestMusic", "AncillaryMusic", "mission_accept", "nonlooping", "immediate", "10", "0");
+	Schedule("777", "PCM_PlayPhoneCall", "tony", "call_cleaner_00"); 
+
+	return;
+}
+
+function ScarfaceEX_MNIS_S01_4_Cops_Are_Here_Cutscene_Trigger_Valid_Script()
+{
+	stxdfoahmdk("MNIS_S01_4_Cops_Are_Here", "", "NIS");
+
+	return;
+}
+
+function ScarfaceEX_Narrator_Quotes_Triggered_For_Island_Package_0_Script()
+{
+	Schedule("1", "GlobalSoundRequestMusic", "StorehouseMusic", "mission_success", "nonlooping", "immediate", "10", "0");
+	Schedule("777", "GlobalSoundPlay", "se58", "se58");
+
+	return;
+}
+
+function ScarfaceEX_Narrator_Quotes_Triggered_For_Island_Package_1_Script()
+{
+	Schedule("1", "GlobalSoundRequestMusic", "FrontMusic", "trav_car_gen_fin", "nonlooping", "immediate", "10", "0");
+	Schedule("777", "GlobalSoundPlay", "se59", "se59");
+
+	return;
+}
+
+function ScarfaceEX_Narrator_Quotes_Triggered_For_Island_Package_2_Script()
+{
+	Schedule("1", "GlobalSoundRequestMusic", "FrontMusic", "trav_car_04_fin", "nonlooping", "immediate", "10", "0");
+	Schedule("777", "GlobalSoundPlay", "se60", "se60");
+
+	return;
+}
+
+function ScarfaceEX_Narrator_Quotes_Triggered_For_Island_Package_3_Script()
+{
+	Schedule("1", "GlobalSoundRequestMusic", "A22Music", "combat_break", "nonlooping", "immediate", "10", "0");
+	Schedule("777", "GlobalSoundPlay", "se61", "se61");
+
+	return;
+}
+
+function ScarfaceEX_Narrator_Quotes_Triggered_For_Island_Package_4_Script()
+{
+	Schedule("1", "GlobalSoundRequestMusic", "S09Music", "success", "nonlooping", "immediate", "10", "0");
+	Schedule("777", "GlobalSoundPlay", "se62", "se62");
+
+	return;
+}
+
+function ScarfaceEX_Narrator_Quotes_Triggered_For_Island_Package_Script()
+{
+	Schedule("1", "GlobalSoundRequestMusic", "S09Music", "success", "nonlooping", "immediate", "10", "0");
+	Schedule("777", "GlobalSoundPlay", "se57", "se57");
+
+	return;
+}
+
+function ScarfaceEX_Narrator_Quotes_Triggered_For_Main_Character_Death_Script()
+{
+	ScheduleAlways("1", "GlobalSoundPlay", "se_narrator", "tonydeath_00");
+
+	return;
+}
+
+function ScarfaceEX_Narrator_Quotes_Triggered_For_Main_Character_Switching_Script()
+{
+	"MainCharacter".isInvincible = 1;
+
+	Schedule("1", "SetBlockingActionMap", "1"); 
+	Schedule("2", "SoundFadeinMix", "duck_phonecall"); 
+	Schedule("3", "HUD_SetGlobalSafeToActivate", "0");
+
+	return;
+}
+
+function ScarfaceEX_Support_Script_MCP_Enforcer_Reset_Locomotion_Type_Name()
+{
+	"MainCharacter".isInvincible = 0;
+	"MainCharacter".Schedule("1", "stxopmddkok");
+	
+	ScheduleAlways("2", "HUD_SetGlobalSafeToActivate", "1");
+	
+	if (FindObject("mcp_Assassin"))
+		FindObject("mcp_Assassin").isInvincible = "1";
+	
+	if (FindObject("mcp_Driver"))
+		FindObject("mcp_Driver").isInvincible = "1";
+	
+	return;
+}
+
+function ScarfaceEX_Support_Script_MCP_Driver_Reset_Locomotion_Type_Name()
+{
+	"MainCharacter".isInvincible = 0;
+	"MainCharacter".Schedule("1", "stxopmddkok");
+	
+	ScheduleAlways("2", "HUD_SetGlobalSafeToActivate", "1");
+	
+	if (FindObject("mcp_Assassin"))
+		FindObject("mcp_Assassin").isInvincible = "1";
+	
+	if (FindObject("mcp_Enforcer"))
+		FindObject("mcp_Enforcer").isInvincible = "1";
+	
+	return;
+}
+
+function ScarfaceEX_Support_Script_MCP_Assassin_Reset_Locomotion_Type_Name()
+{
+	"MainCharacter".isInvincible = 0;
+	"MainCharacter".Schedule("1", "stxopmddkok");
+	
+	ScheduleAlways("2", "HUD_SetGlobalSafeToActivate", "1");
+	
+	if (FindObject("mcp_Driver"))
+		FindObject("mcp_Driver").isInvincible = "1";
+	
+	if (FindObject("mcp_Enforcer"))
+		FindObject("mcp_Enforcer").isInvincible = "1";
+	
+	return;
+}
+
+function ScarfaceEX_Support_Script()
+{
+	if (CVM_GetMainCharacterPackage() $= "MCP_Assassin")
+	{
+		if (FindObject("mcp_Driver") && FindObject("mcp_Enforcer"))
+			return;
+		
+		"MainCharacter".isInvincible = 1;
+		"MainCharacter".Schedule("3", "stxphahdkkj", "0");
+		
+		ScheduleAlways("1", "HUD_SetGlobalSafeToActivate", "0");
+		ScheduleAlways("7", "SoundFadeoutMix", "duck_phonecall");
+		ScheduleAlways("3333", "ScarfaceEX_Support_Script_MCP_Assassin_Reset_Locomotion_Type_Name");
+		
+		if (!FindObject("mcp_Driver"))
+		{
+			%mcpDriver = new AmbientSpawnObject();
+			%mcpDriver.desiredSpawnCount = "1";
+			%mcpDriver.spawnscriptclass = "DWHenchman";
+			%mcpDriver.spawnname = "mcp_Driver";
+			%mcpDriver.spawntemplate = "MCP_Driver";
+			%mcpDriver.usegangpriority = "1";
+			%mcpDriver.spawnweapon = "WeaponTemplateSniper";
+			%mcpDriver.cleanuppolicy = "ON_SPAWNER_DELETE";
+			%mcpDriver.deleteWhenCulled = "1";
+			%mcpDriver.spawndistance = "67";
+			%mcpDriver.totalSpawnCount = "1";
+		}
+		
+		if (!FindObject("mcp_Enforcer"))
+		{
+			%mcpEnforcer = new AmbientSpawnObject();
+			%mcpEnforcer.desiredSpawnCount = "1";
+			%mcpEnforcer.spawnscriptclass = "DWHenchman";
+			%mcpEnforcer.spawnname = "mcp_Enforcer";
+			%mcpEnforcer.spawntemplate = "MCP_Enforcer";
+			%mcpEnforcer.usegangpriority = "1";
+			%mcpEnforcer.spawnweapon = "WeaponTemplateMAC10Upgrade2";
+			%mcpEnforcer.cleanuppolicy = "ON_SPAWNER_DELETE";
+			%mcpEnforcer.deleteWhenCulled = "1";
+			%mcpEnforcer.spawndistance = "67";
+			%mcpEnforcer.totalSpawnCount = "1";
+		}
+		
+		return;
+	}
+
+	if (CVM_GetMainCharacterPackage() $= "MCP_Driver")
+	{
+		if (FindObject("mcp_Assassin") && FindObject("mcp_Enforcer"))
+			return;
+		
+		"MainCharacter".isInvincible = 1;
+		"MainCharacter".Schedule("3", "stxphahdkkj", "0");
+		
+		ScheduleAlways("1", "HUD_SetGlobalSafeToActivate", "0");
+		ScheduleAlways("7", "SoundFadeoutMix", "duck_phonecall");
+		ScheduleAlways("3333", "ScarfaceEX_Support_Script_MCP_Driver_Reset_Locomotion_Type_Name");
+				
+		if (!FindObject("mcp_Assassin"))
+		{
+			%mcpAssassin = new AmbientSpawnObject();
+			%mcpAssassin.desiredSpawnCount = "1";
+			%mcpAssassin.spawnscriptclass = "DWHenchman";
+			%mcpAssassin.spawnname = "mcp_Assassin";
+			%mcpAssassin.spawntemplate = "MCP_Assassin";
+			%mcpAssassin.usegangpriority = "1";
+			%mcpAssassin.spawnweapon = "WeaponTemplateUziUpgrade2";
+			%mcpAssassin.cleanuppolicy = "ON_SPAWNER_DELETE";
+			%mcpAssassin.deleteWhenCulled = "1";
+			%mcpAssassin.spawndistance = "67";
+			%mcpAssassin.totalSpawnCount = "1";	
+		}
+		
+		if (!FindObject("mcp_Enforcer"))
+		{
+			%mcpEnforcer = new AmbientSpawnObject();
+			%mcpEnforcer.desiredSpawnCount = "1";
+			%mcpEnforcer.spawnscriptclass = "DWHenchman";
+			%mcpEnforcer.spawnname = "mcp_Enforcer";
+			%mcpEnforcer.spawntemplate = "MCP_Enforcer";
+			%mcpEnforcer.usegangpriority = "1";
+			%mcpEnforcer.spawnweapon = "WeaponTemplateDesertEagle";
+			%mcpEnforcer.cleanuppolicy = "ON_SPAWNER_DELETE";
+			%mcpEnforcer.deleteWhenCulled = "1";
+			%mcpEnforcer.spawndistance = "67";
+			%mcpEnforcer.totalSpawnCount = "1";
+		}
+		
+		return;
+	}
+
+	if (CVM_GetMainCharacterPackage() $= "MCP_Enforcer")
+	{
+		if (FindObject("mcp_Assassin") && FindObject("mcp_Driver"))
+			return;
+		
+		"MainCharacter".isInvincible = 1;
+		"MainCharacter".Schedule("3", "stxphahdkkj", "0");
+		
+		ScheduleAlways("1", "HUD_SetGlobalSafeToActivate", "0");
+		ScheduleAlways("7", "SoundFadeoutMix", "duck_phonecall");
+		ScheduleAlways("3333", "ScarfaceEX_Support_Script_MCP_Enforcer_Reset_Locomotion_Type_Name");
+				
+		if (!FindObject("mcp_Assassin"))
+		{
+			%mcpAssassin = new AmbientSpawnObject();
+			%mcpAssassin.desiredSpawnCount = "1";
+			%mcpAssassin.spawnscriptclass = "DWHenchman";
+			%mcpAssassin.spawnname = "mcp_Assassin";
+			%mcpAssassin.spawntemplate = "MCP_Assassin";
+			%mcpAssassin.usegangpriority = "1";
+			%mcpAssassin.spawnweapon = "WeaponTemplateM16Mortar";
+			%mcpAssassin.cleanuppolicy = "ON_SPAWNER_DELETE";
+			%mcpAssassin.deleteWhenCulled = "1";
+			%mcpAssassin.spawndistance = "67";
+			%mcpAssassin.totalSpawnCount = "1";	
+		}
+		
+		if (!FindObject("mcp_Driver"))
+		{
+			%mcpDriver = new AmbientSpawnObject();
+			%mcpDriver.desiredSpawnCount = "1";
+			%mcpDriver.spawnscriptclass = "DWHenchman";
+			%mcpDriver.spawnname = "mcp_Driver";
+			%mcpDriver.spawntemplate = "MCP_Driver";
+			%mcpDriver.usegangpriority = "1";
+			%mcpDriver.spawnweapon = "WeaponTemplateAK47Upgrade2";
+			%mcpDriver.cleanuppolicy = "ON_SPAWNER_DELETE";
+			%mcpDriver.deleteWhenCulled = "1";
+			%mcpDriver.spawndistance = "67";
+			%mcpDriver.totalSpawnCount = "1";
+		}
+		
+		return;
+	}
+
+	return;
+}
+
+function ScarfaceEX_Narrator_Quotes_Triggered_For_Miami_Package_0_Script()
+{
+	Schedule("1", "GlobalSoundRequestMusic", "FrontMusic", "trav_car_gen_fin", "nonlooping", "immediate", "10", "0");
+	Schedule("777", "GlobalSoundPlay", "se_narrator", "introduction_00");
+
+	return;
+}
+
+function ScarfaceEX_Narrator_Quotes_Triggered_For_Miami_Package_1_Script()
+{
+	Schedule("1", "GlobalSoundRequestMusic", "FrontMusic", "trav_car_04_fin", "nonlooping", "immediate", "10", "0");
+	Schedule("777", "GlobalSoundPlay", "se_narrator", "mojo");
+
+	return;
+}
+
+function ScarfaceEX_Narrator_Quotes_Triggered_For_Miami_Package_2_Script()
+{
+	Schedule("1", "GlobalSoundRequestMusic", "A22Music", "combat_break", "nonlooping", "immediate", "10", "0");
+	Schedule("777", "GlobalSoundPlay", "se_narrator", "shoutout_01");
+
+	return;
+}
+
+function ScarfaceEX_Narrator_Quotes_Triggered_For_Miami_Package_3_Script()
+{
+	Schedule("1", "GlobalSoundRequestMusic", "S09Music", "success", "nonlooping", "immediate", "10", "0");
+	Schedule("777", "GlobalSoundPlay", "se_narrator", "shoutout_02");
+
+	return;
+}
+
+function ScarfaceEX_Narrator_Quotes_Triggered_For_Miami_Package_4_Script()
+{
+	Schedule("1", "GlobalSoundRequestMusic", "StorehouseMusic", "mission_success", "nonlooping", "immediate", "10", "0");
+	Schedule("777", "GlobalSoundPlay", "se_narrator", "shoutout_03");
+
+	return;
+}
+
+function ScarfaceEX_Narrator_Quotes_Triggered_For_Miami_Package_5_Script()
+{
+	Schedule("1", "GlobalSoundRequestMusic", "FrontMusic", "trav_car_gen_fin", "nonlooping", "immediate", "10", "0");
+	Schedule("777", "GlobalSoundPlay", "se_narrator", "shoutout_04");
+
+	return;
+}
+
+function ScarfaceEX_Narrator_Quotes_Triggered_For_Miami_Package_6_Script()
+{
+	Schedule("1", "GlobalSoundRequestMusic", "FrontMusic", "trav_car_04_fin", "nonlooping", "immediate", "10", "0");
+	Schedule("777", "GlobalSoundPlay", "se_narrator", "shoutout_05");
+
+	return;
+}
+
+function ScarfaceEX_Narrator_Quotes_Triggered_For_Miami_Package_7_Script()
+{
+	Schedule("1", "GlobalSoundRequestMusic", "A22Music", "combat_break", "nonlooping", "immediate", "10", "0");
+	Schedule("777", "PCM_PlayPhoneCall", "se28", "se28"); 
+
+	return;
+}
+
+function ScarfaceEX_Narrator_Quotes_Triggered_For_Miami_Package_8_Script()
+{
+	Schedule("1", "GlobalSoundRequestMusic", "FrontMusic", "trav_car_04_fin", "nonlooping", "immediate", "10", "0");
+	Schedule("777", "PCM_PlayPhoneCall", "se28b", "se28b"); 
+
+	return;
+}
+
+function ScarfaceEX_Narrator_Quotes_Triggered_For_Miami_Package_9_Script()
+{
+	Schedule("1", "GlobalSoundRequestMusic", "FrontMusic", "trav_car_gen_fin", "nonlooping", "immediate", "10", "0");
+	Schedule("777", "PCM_PlayPhoneCall", "se29", "se29"); 
+
+	return;
+}
+
+function ScarfaceEX_Narrator_Quotes_Triggered_For_Miami_Package_10_Script()
+{
+	Schedule("1", "GlobalSoundRequestMusic", "S09Music", "success", "nonlooping", "immediate", "10", "0");
+	Schedule("777", "PCM_PlayPhoneCall", "se30", "se30"); 
+
+	return;
+}
+
+function ScarfaceEX_Narrator_Quotes_Triggered_For_Miami_Package_11_Script()
+{
+	Schedule("1", "GlobalSoundRequestMusic", "StorehouseMusic", "mission_success", "nonlooping", "immediate", "10", "0");
+	Schedule("777", "PCM_PlayPhoneCall", "se31", "se31"); 
+
+	return;
+}
+
+function ScarfaceEX_Narrator_Quotes_Triggered_For_Miami_Package_12_Script()
+{
+	Schedule("1", "GlobalSoundRequestMusic", "A22Music", "combat_break", "nonlooping", "immediate", "10", "0");
+	Schedule("777", "PCM_PlayPhoneCall", "se32", "se32"); 
+
+	return;
+}
+
+function ScarfaceEX_Narrator_Quotes_Triggered_For_Miami_Package_13_Script()
+{
+	Schedule("1", "GlobalSoundRequestMusic", "FrontMusic", "trav_car_04_fin", "nonlooping", "immediate", "10", "0");
+	Schedule("777", "PCM_PlayPhoneCall", "se33", "se33"); 
+
+	return;
+}
+
+function ScarfaceEX_Narrator_Quotes_Triggered_For_Miami_Package_14_Script()
+{
+	Schedule("1", "GlobalSoundRequestMusic", "FrontMusic", "trav_car_gen_fin", "nonlooping", "immediate", "10", "0");
+	Schedule("777", "PCM_PlayPhoneCall", "se34", "se34"); 
+
+	return;
+}
+
+function ScarfaceEX_Narrator_Quotes_Triggered_For_Miami_Package_15_Script()
+{
+	Schedule("1", "GlobalSoundRequestMusic", "S09Music", "success", "nonlooping", "immediate", "10", "0");
+	Schedule("777", "PCM_PlayPhoneCall", "se35", "se35"); 
+
+	return;
+}
+
+function ScarfaceEX_Narrator_Quotes_Triggered_For_Miami_Package_16_Script()
+{
+	Schedule("1", "GlobalSoundRequestMusic", "StorehouseMusic", "mission_success", "nonlooping", "immediate", "10", "0");
+	Schedule("777", "PCM_PlayPhoneCall", "se36", "se36"); 
+
+	return;
+}
+
+function ScarfaceEX_Narrator_Quotes_Triggered_For_Miami_Package_17_Script()
+{
+	Schedule("1", "GlobalSoundRequestMusic", "A22Music", "combat_break", "nonlooping", "immediate", "10", "0");
+	Schedule("777", "PCM_PlayPhoneCall", "se37", "se37"); 
+
+	return;
+}
+
+function ScarfaceEX_Narrator_Quotes_Triggered_For_Miami_Package_18_Script()
+{
+	Schedule("1", "GlobalSoundRequestMusic", "FrontMusic", "trav_car_04_fin", "nonlooping", "immediate", "10", "0");
+	Schedule("777", "PCM_PlayPhoneCall", "se39", "se39"); 
+
+	return;
+}
+
+function ScarfaceEX_Narrator_Quotes_Triggered_For_Miami_Package_Script()
+{
+	Schedule("1", "GlobalSoundRequestMusic", "StorehouseMusic", "mission_success", "nonlooping", "immediate", "10", "0");
+	Schedule("777", "GlobalSoundPlay", "se_narrator", "ee_00");
+
+	return;
+}
+
+return;

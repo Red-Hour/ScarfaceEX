@@ -1,0 +1,2439 @@
+$blockVehicleShootingActionMap = "";
+
+$extendedMissionQuotesDelay = stxidgjogdl("2357", "7531");
+$extendedMissionQuotesTimer = GetGameTime();
+
+$phoneCallIteration = "-1";
+$phoneCallValidityTimer = GetGameTime();
+
+$narratorTauntingDeathOfPlayer[0] = "-1";
+$narratorTauntingDeathOfPlayer[1] = "-1";
+$narratorTauntingDeathOfPlayer[2] = GetGameTime();
+
+$lastRageMode = -1;
+$lastRageModeTimer = GetGameTime();
+$lastMainCharacterPackage = "";
+$lastHealth = -1;
+$lastX = -1;
+$lastZ = -1;
+
+$T01WeaponPickedUp = -1;
+$T01Timer = GetGameTime();
+$T01MissionComplete = -1;
+$T01MissionStart = -1;
+$T01MissionActive = -1;
+$T01LastRageMode = -1;
+$T01QuoteTimer = -1;
+
+$wallCoverStateTracker = "-1";
+
+function ScarfaceEX()
+{
+	%refreshTimers = IsMainCharacterKilledOrFlaggedForOnKilled() || RageState.IsRageModeOn() || (GlobalSoundGetCurrentMs() != -1) || HUD_IsGamePaused();
+	
+	if ($gPauseCharacters || $gPauseVehicles || Is_gPauseGame() || %refreshTimers)
+	{
+		$phoneCallValidityTimer = GetGameTime();
+		$extendedMissionQuotesTimer = GetGameTime();
+		$T01Timer = GetGameTime();
+	}
+	
+	if (!ScarfaceEX_Validity())
+	{
+		$phoneCallValidityTimer = GetGameTime();
+		$narratorTauntingDeathOfPlayer[2] = GetGameTime();
+		$extendedMissionQuotesTimer = GetGameTime();
+		$T01Timer = GetGameTime();
+		$lastHealth = -1;
+		$lastX = -1;
+		$lastZ = -1;
+		
+		ScheduleAlways("67", "ScarfaceEX");
+		
+		return;
+	}
+
+	Phone_Calls_Invalidity();
+	Narrator_Taunting_Death_Of_Player();
+	Health_Recovery();
+	Main_Character_Switching_Validity();
+	T01_Extended();
+	Rage_State_Extended();
+	Mission_Combat_Quotes_Extended();
+	ScheduleAlways("67", "ScarfaceEX");
+	
+	return;
+}
+
+function Mission_Combat_Quotes_Extended()
+{
+	if (((GetGameTime() - $extendedMissionQuotesTimer) > $extendedMissionQuotesDelay) && IsMissionRunning())
+	{
+		$extendedMissionQuotesTimer = GetGameTime();
+		$extendedMissionQuotesDelay = stxidgjogdl("2357", "7531");
+		%S01 = MM_GetMissionNameState("S01a") || MM_GetMissionNameState("S01c");
+		%S09 = FindObject("spawn_Mob29") || FindObject("spawn_Mob28") || FindObject("spawn_Mob27") || FindObject("spawn_Mob26") || FindObject("spawn_Mob25") ||
+			   FindObject("spawn_Mob24c") || FindObject("spawn_Mob23") || FindObject("spawn_Mob22") || FindObject("spawn_Mob21") || FindObject("spawn_Mob20e") ||
+			   FindObject("spawn_Mob20d") || FindObject("spawn_Mob20c") || FindObject("spawn_Mob20b") || FindObject("spawn_Mob20a") || FindObject("spawn_Mob19") ||
+			   FindObject("spawn_Mob18") || FindObject("spawn_Mob17") || FindObject("spawn_Mob16") || FindObject("spawn_Mob15") || FindObject("spawn_Mob14") ||
+			   FindObject("spawn_Mob13") || FindObject("spawn_Mob12") || FindObject("spawn_Mob11") || FindObject("spawn_Mob10") || FindObject("spawn_Mob09") ||
+			   FindObject("Bridge") || FindObject("spawn_Mob08") || FindObject("spawn_Mob07") || FindObject("spawn_Mob06") || FindObject("spawn_Mob05") ||
+			   FindObject("spawn_MobI") || FindObject("spawn_Mob04") || FindObject("spawn_Mob03") || FindObject("spawn_Mob02") || FindObject("spawn_Mob01") ||
+			   FindObject("spawn_MobH") || FindObject("spawn_MobD") || FindObject("spawn_MobC") || FindObject("spawn_MobB") || FindObject("spawn_MobA") ||
+			   FindObject("spawn_MobG") || FindObject("EngineRoomAmbient") || FindObject("Stage2InitialEnemies") || FindObject("spawn_MobE") ||
+			   FindObject("spawn_MobF") || FindObject("spawn_Mob04a") || FindObject("spawn_Mob04b") || FindObject("spawn_Mob04c") || FindObject("PastBridge") ||
+			   FindObject("DeckLeg1") || FindObject("spawn_Mob13A") || FindObject("Spawn_Nacho") || FindObject("GameNacho") || FindObject("NachoSnipers") ||
+			   FindObject("Spawn_N_Sniper1") || FindObject("Spawn_N_Sniper2") || FindObject("NachoSharks") || FindObject("Spawn_Shark1") ||
+			   FindObject("Spawn_Shark2") || FindObject("NachoSniper1") || FindObject("NachoSniper2") || FindObject("NachosBoat") || FindObject("YachtMidget") ||
+			   FindObject("Spawn_NachosYacht");
+		
+		if ((DBGetReputationLevel() == 0) && (CVM_GetMainCharacterPackage() $= "MCP_BlackSuitTony") && %S01)
+			FindObject("MainCharacter").RequestVocal("combat_attack_skull_00", "normal_vocal");
+			
+		if (MM_GetMissionNameState("S14"))
+		{
+			if (FindObject("S14_AlfonsoDiaz").HEALTH)
+				FindObject("MainCharacter").RequestVocal("combat_attack_alfonso_diaz_00", "normal_vocal");
+				
+			if (FindObject("S14_EdgarDiaz").HEALTH)
+				FindObject("MainCharacter").RequestVocal("combat_attack_edgar_diaz_00", "normal_vocal");
+		}
+			
+		if (MM_GetMissionNameState("S18"))
+		{
+			if (FindObject("S18_SheffieldKillMe").HEALTH || FindObject("S18_Sheffield").HEALTH)
+				FindObject("MainCharacter").RequestVocal("combat_attack_sheffield_00", "normal_vocal");
+				
+			if (FindObject("S18_Gaspar").HEALTH || FindObject("S18_GasparGoto").HEALTH)
+				FindObject("MainCharacter").RequestVocal("combat_attack_gaspar_00", "normal_vocal");
+		}
+			
+		if (MM_GetMissionNameState("S09") && %S09)
+			FindObject("MainCharacter").RequestVocal("combat_attack_nacho_00", "normal_vocal");
+	}
+	
+	return;
+}
+
+function CharacterObject::Grappling_Ricardo_State(%this)
+{
+	if (%this.IsMainCharacter() && (FindObject("MainCharacter").GetRemainingVocalMs() == -1))
+	{
+		if (FindObject("Ricardo").HEALTH)
+			FindObject("MainCharacter").RequestVocal("combat_attack_ricardo_00", "normal_vocal");
+			
+		else
+		{
+			%randomValue = stxidgjogdl("0", "8");
+			
+			switch(%randomValue)
+			{
+				case 0:
+				
+					FindObject("MainCharacter").RequestVocal("combat_00", "normal_vocal");
+					
+				case 1:
+				
+					FindObject("MainCharacter").RequestVocal("combat_01", "normal_vocal");
+					
+				case 2:
+				
+					FindObject("MainCharacter").RequestVocal("execution_00", "normal_vocal");
+					
+				case 3:
+				
+					FindObject("MainCharacter").RequestVocal("faceoff_00", "normal_vocal");
+					
+				case 4:
+				
+					FindObject("MainCharacter").RequestVocal("intimidate_00", "normal_vocal");
+					
+				case 5:
+				
+					FindObject("MainCharacter").RequestVocal("kill_00", "normal_vocal");
+					
+				case 6:
+				
+					FindObject("MainCharacter").RequestVocal("laughter_00", "normal_vocal");
+					
+				case 7:
+				
+					FindObject("MainCharacter").RequestVocal("rageshout_00", "normal_vocal");
+					
+				case 8:
+				
+					FindObject("MainCharacter").RequestVocal("special_00", "normal_vocal");
+			}
+		}
+	}
+	
+	return;
+}
+
+function CharacterObject::Vehicular_Weapon_Reload_State(%this, %constraint)
+{
+	if (%this.IsMainCharacter())
+		switch$(%constraint)
+		{
+			case "Active":
+			
+				if (!$blockVehicleShootingActionMap)
+				{
+					$gDisableWeaponSelection = 1;
+					$blockVehicleShootingActionMap = new ActionMap();
+					$blockVehicleShootingActionMap.BindBlockingKey("Mouse0", "Button_0", "IDontCare");
+					$blockVehicleShootingActionMap.BindBlockingKey("Mouse0", "Button_1", "IDontCare");
+					$blockVehicleShootingActionMap.BindBlockingKey("Keyboard0", "Caps_Lock", "IDontCare");
+					$blockVehicleShootingActionMap.BindBlockingKey("Keyboard0", "Delete", "IDontCare");
+					$blockVehicleShootingActionMap.BindBlockingKey("Keyboard0", "Ctrl", "IDontCare");
+					$blockVehicleShootingActionMap.BindBlockingKey("Keyboard0", "F", "IDontCare");
+					$blockVehicleShootingActionMap.BindBlockingKey("Keyboard0", "{", "IDontCare");
+					$blockVehicleShootingActionMap.BindBlockingKey("Keyboard0", "E", "IDontCare");
+					$blockVehicleShootingActionMap.BindBlockingKey("Keyboard0", "W", "IDontCare");
+					$blockVehicleShootingActionMap.BindBlockingKey("Keyboard0", "P", "IDontCare");
+					$blockVehicleShootingActionMap.BindBlockingKey("Keyboard0", "S", "IDontCare");
+					$blockVehicleShootingActionMap.BindBlockingKey("Keyboard0", ";", "IDontCare");
+					$blockVehicleShootingActionMap.BindBlockingKey("Joystick", "R1", "IDontCare");
+					$blockVehicleShootingActionMap.BindBlockingKey("Joystick", "L1", "IDontCare");
+					$blockVehicleShootingActionMap.BindBlockingKey("Joystick", "Triangle", "IDontCare");
+					$blockVehicleShootingActionMap.BindBlockingKey("Joystick", "Square", "IDontCare");
+					$blockVehicleShootingActionMap.BindBlockingKey("Joystick", "X", "IDontCare");
+					$blockVehicleShootingActionMap.Push();
+				}
+			
+			case "Inactive":
+			
+				if ($blockVehicleShootingActionMap)
+				{
+					$gDisableWeaponSelection = 0;
+					$blockVehicleShootingActionMap.Pop();
+					$blockVehicleShootingActionMap.Delete();
+					$blockVehicleShootingActionMap = "";	
+				}
+		}
+		
+	return;
+}
+
+function CharacterObject::Wall_Cover_State(%this, %constraint)
+{
+	if (%this.IsMainCharacter())
+		$wallCoverStateTracker = %constraint;
+
+	return;
+}
+
+function Rage_State_Extended_Loop()
+{
+	%currentReputationLevel = DBGetReputationLevel();
+	
+	switch(%currentReputationLevel)
+	{
+		case 0:
+		
+			%currentMainCharacterPackage = CVM_GetMainCharacterPackage();
+			
+			if (RageState.IsRageModeOn())
+			{
+				switch$(%currentMainCharacterPackage)
+				{
+					case "MCP_ArmyTony":
+				
+						if ((GetGameTime() - $lastRageModeTimer) < 5293)
+						{
+							Schedule("1000", "DBChangeBalls", "1000");
+							Schedule("1000", "Rage_State_Extended_Loop");
+						}
+						
+						else
+							DBChangeBalls(-1000);
+							
+					case "MCP_BlackSuitTony":
+				
+						if ((GetGameTime() - $lastRageModeTimer) < 16149)
+						{
+							Schedule("1000", "DBChangeBalls", "1000");
+							Schedule("1000", "Rage_State_Extended_Loop");
+						}
+						
+						else
+							DBChangeBalls(-1000);
+				}
+			}
+		
+		case 1:
+		
+			if (RageState.IsRageModeOn())
+			{
+				if ((GetGameTime() - $lastRageModeTimer) < 6650)
+				{
+					Schedule("1000", "DBChangeBalls", "1000");
+					Schedule("1000", "Rage_State_Extended_Loop");
+				}
+				
+				else
+					DBChangeBalls(-1000);
+			}
+			
+		case 2:
+		
+			if (RageState.IsRageModeOn())
+			{
+				if ((GetGameTime() - $lastRageModeTimer) < 8007)
+				{
+					Schedule("1000", "DBChangeBalls", "1000");
+					Schedule("1000", "Rage_State_Extended_Loop");
+				}
+				
+				else
+					DBChangeBalls(-1000);
+			}
+			
+		case 3:
+		
+			if (RageState.IsRageModeOn())
+			{
+				if ((GetGameTime() - $lastRageModeTimer) < 9364)
+				{
+					Schedule("1000", "DBChangeBalls", "1000");
+					Schedule("1000", "Rage_State_Extended_Loop");
+				}
+				
+				else
+					DBChangeBalls(-1000);
+			}
+			
+		case 4:
+		
+			if (RageState.IsRageModeOn())
+			{
+				if ((GetGameTime() - $lastRageModeTimer) < 10721)
+				{
+					Schedule("1000", "DBChangeBalls", "1000");
+					Schedule("1000", "Rage_State_Extended_Loop");
+				}
+				
+				else
+					DBChangeBalls(-1000);
+			}
+			
+		case 5:
+		
+			if (RageState.IsRageModeOn())
+			{
+				if ((GetGameTime() - $lastRageModeTimer) < 12078)
+				{
+					Schedule("1000", "DBChangeBalls", "1000");
+					Schedule("1000", "Rage_State_Extended_Loop");
+				}
+				
+				else
+					DBChangeBalls(-1000);
+			}
+			
+		case 6:
+		
+			if (RageState.IsRageModeOn())
+			{
+				if ((GetGameTime() - $lastRageModeTimer) < 13435)
+				{
+					Schedule("1000", "DBChangeBalls", "1000");
+					Schedule("1000", "Rage_State_Extended_Loop");
+				}
+				
+				else
+					DBChangeBalls(-1000);
+			}
+			
+		case 7:
+		
+			if (RageState.IsRageModeOn())
+			{
+				if ((GetGameTime() - $lastRageModeTimer) < 14792)
+				{
+					Schedule("1000", "DBChangeBalls", "1000");
+					Schedule("1000", "Rage_State_Extended_Loop");
+				}
+				
+				else
+					DBChangeBalls(-1000);
+			}
+			
+		case 8:
+		
+			if (RageState.IsRageModeOn())
+			{
+				if ((GetGameTime() - $lastRageModeTimer) < 16149)
+				{
+					Schedule("1000", "DBChangeBalls", "1000");
+					Schedule("1000", "Rage_State_Extended_Loop");
+				}
+				
+				else
+					DBChangeBalls(-1000);
+			}
+	}
+	
+	return;
+}
+
+function Rage_State_Extended()
+{
+	if (RageState.IsRageModeOn() && !$lastRageMode)
+	{
+		$lastRageModeTimer = GetGameTime();
+		
+		Rage_State_Extended_Loop();
+	}
+	
+	$lastRageMode = RageState.IsRageModeOn();
+	
+	return;
+}
+
+function T01_Extended()
+{
+	if (!((CVM_GetMainCharacterPackage() $= "MCP_ArmyTony") && (MM_GetMissionNameState("T01"))))
+	{
+		$T01Timer = GetGameTime();
+		$T01MissionComplete = -1;
+		$T01WeaponPickedUp = -1;
+		$T01MissionStart = -1;
+		$T01MissionActive = -1;
+		
+		return;
+	}
+	
+	if (!RageState.IsRageModeOn() && ($T01LastRageMode == 1) && ($T01MissionComplete == -1))
+		T01_Narrator_Instructions("objective_16");
+		
+	if (FindObject("MainCharacter").GetCurrentDrawnWeapon() && ($T01WeaponPickedUp == -1))
+		T01_Narrator_Instructions("objective_05");
+		
+	if ($T01MissionStart == -1)
+		T01_Narrator_Instructions("objectives_01_17");
+	
+	if (T01_Narrator_Quotes_Validity())
+		$T01Timer = GetGameTime();
+	
+	%valid = ($T01MissionComplete == -1) && ($T01MissionStart == 1) && !%invalid && ((GetGameTime() - $T01Timer) > $T01QuoteTimer) && ($T01MissionActive == 1);
+	
+	if (%valid)
+	{
+		T01_Narrator_Instructions("objectives");
+		
+		$T01Timer = GetGameTime();
+	}
+	
+	$T01LastRageMode = RageState.IsRageModeOn();
+	
+	return;
+}
+
+function T01_Narrator_Quotes_Validity()
+{
+	%t01NQV = GlobalSoundIsPlaying("se_narrator", "objective_01") || GlobalSoundIsPlaying("se_narrator", "objective_02");
+	%t01NQV = GlobalSoundIsPlaying("se_narrator", "objective_03") || GlobalSoundIsPlaying("se_narrator", "objective_04") || %t01NQV;
+	%t01NQV = GlobalSoundIsPlaying("se_narrator", "objective_05") || GlobalSoundIsPlaying("se_narrator", "objective_06") || %t01NQV;
+	%t01NQV = GlobalSoundIsPlaying("se_narrator", "objective_07") || GlobalSoundIsPlaying("se_narrator", "objective_08") || %t01NQV;
+	%t01NQV = GlobalSoundIsPlaying("se_narrator", "objective_09") || GlobalSoundIsPlaying("se_narrator", "objective_10") || %t01NQV;
+	%t01NQV = GlobalSoundIsPlaying("se_narrator", "objective_11") || GlobalSoundIsPlaying("se_narrator", "objective_12") || %t01NQV;
+	%t01NQV = GlobalSoundIsPlaying("se_narrator", "objective_13") || GlobalSoundIsPlaying("se_narrator", "objective_14") || %t01NQV;
+	%t01NQV = GlobalSoundIsPlaying("se_narrator", "objective_15") || GlobalSoundIsPlaying("se_narrator", "objective_16") || %t01NQV;
+	%t01NQV = GlobalSoundIsPlaying("se_narrator", "objective_17") || GlobalSoundIsPlaying("se_narrator", "objective_18") || %t01NQV;
+		
+	return %t01NQV;
+}
+
+function ScarfaceEX_Validity()
+{
+	%scarfaceEXValidity = CVM_IsMainCharacterPackageLoaded() && !NISIsPlaying() && !ScreenFxTransitionIsBlackedOut() && !IsTeleporting() && !$gIsBlackoutOn;
+	
+	return %scarfaceEXValidity && !HUD_IsMissionInAnyCrazyStates();
+}
+
+function Phone_Calls_Invalidity()
+{
+	if (FindObject("CellPhone"))
+	{
+		$phoneCallValidityTimer = GetGameTime();
+		$extendedMissionQuotesTimer = GetGameTime();
+		$T01Timer = GetGameTime();
+		
+		if (HUD_IsMissionInAnyCrazyStates())
+		{
+			"MainCharacter".stxopmddkok();
+			
+			GlobalSoundStop();
+		}
+	
+		if (Reputation_Levelling_Up() && !Sosa_Phone_Calls())
+			GlobalSoundStop();
+	}
+	
+	if (FindObject("MainCharacter").GetRemainingVocalMs() != -1)
+	{
+		$T01Timer = GetGameTime();
+		$phoneCallValidityTimer = GetGameTime();
+		$extendedMissionQuotesTimer = GetGameTime();
+	}
+		
+	return;
+}
+
+function Narrator_Taunting_Death_Of_Player()
+{
+	%constraints = (FindObject("MainCharacter").GetAnimationRequestID() > 0) && (FindObject("MainCharacter").GetRemainingVocalMs() == -1);
+	%constraints = ((FindObject("MainCharacter").HEALTH <= 0) || IsMainCharacterKilledOrFlaggedForOnKilled()) && (GlobalSoundGetCurrentMs() == -1) && %constraints;
+	%constraints = ($narratorTauntingDeathOfPlayer[0] $= "-1") && (Is_gPauseGame() || ((GetGameTime() - $narratorTauntingDeathOfPlayer[2]) > 777)) && %constraints;
+	%constraint = ($narratorTauntingDeathOfPlayer[1] $= "-1") && (FindObject("MainCharacter").GetAnimationRequestID() > 0);
+	%constraint = ((FindObject("MainCharacter").HEALTH <= 0) || IsMainCharacterKilledOrFlaggedForOnKilled()) && %constraint;
+	
+	if (%constraint)
+	{
+		$narratorTauntingDeathOfPlayer[1] = "0";
+		$narratorTauntingDeathOfPlayer[2] = GetGameTime();
+	}
+	
+	if (%constraints)
+	{
+		GlobalSoundPlay("se_narrator", "tonydeath_00");
+		
+		$narratorTauntingDeathOfPlayer[0] = "0";
+	}
+	
+	if ((FindObject("MainCharacter").GetAnimationRequestID() >= 0) && (FindObject("MainCharacter").HEALTH > 0) && !IsMainCharacterKilledOrFlaggedForOnKilled())
+	{
+		$narratorTauntingDeathOfPlayer[0] = "-1";
+		$narratorTauntingDeathOfPlayer[1] = "-1";
+		$narratorTauntingDeathOfPlayer[2] = GetGameTime();
+	}
+	
+	return;
+}
+
+function Main_Character_Switching_Validity()
+{
+	%refreshConstraints = MGM_GetMissionActive() || IsMainCharacterKilledOrFlaggedForOnKilled() || HUD_IsMissionInAnyCrazyStates();
+	%refreshConstraints = FindObject("MainCharacter").IsWallCoverAvailable() || FindObject("MainCharacter").IsSniping() || %refreshConstraints;
+	%refreshConstraints = FindObject("MainCharacter").IsInCombat() || FindObject("MainCharacter").IsCharacterSeatedInVehicle() || %refreshConstraints;
+	%refreshConstraints = (FindObject("MainCharacter").Speed() > 0.12357) || FindObject("MainCharacter").IsCharacterInDangerousVehicleState() || %refreshConstraints;
+	%refreshConstraints = FindObject("MainCharacter").IsCharacterInCar() || FindObject("MainCharacter").IsCharacterInBoat() || %refreshConstraints;
+	%refreshConstraints = FindObject("MainCharacter").GetCurrentDrawnWeapon() || (FindObject("MainCharacter").GetAnimationRequestID() == -1) || %refreshConstraints;
+	%refreshConstraints = RageState.IsRageModeOn() || (FindObject("MainCharacter").HEALTH <= 0) || FindObject("MainCharacter").IsCrouchRun() || %refreshConstraints;
+	%refreshConstraints = FindObject("MainCharacter").IsCrouching() || FindObject("MainCharacter").IsWeaponRaised() || %refreshConstraints;
+	
+	if (%refreshConstraints)
+		return;
+		
+	if ($lastMainCharacterPackage $= "")
+	{
+		$lastMainCharacterPackage = CVM_GetMainCharacterPackage();
+		
+		return;
+	}
+	
+	%resetConstraints = HUD_IsMissionInAnyCrazyStates() || FindObject("MainCharacter").IsWallCoverAvailable() || FindObject("MainCharacter").IsSniping();
+	%resetConstraints = RageState.IsRageModeOn() || FindObject("MainCharacter").IsInCombat() || FindObject("MainCharacter").IsCrouchRun() || %resetConstraints;
+	%resetConstraints = FindObject("MainCharacter").IsCharacterSeatedInVehicle() || (FindObject("MainCharacter").Speed() > 0.12357) || %resetConstraints;
+	%resetConstraints = FindObject("MainCharacter").IsCharacterInDangerousVehicleState() || FindObject("MainCharacter").IsCharacterInCar() || %resetConstraints;
+	%resetConstraints = FindObject("MainCharacter").IsCharacterInBoat() || FindObject("MainCharacter").GetCurrentDrawnWeapon() || %resetConstraints;
+	%resetConstraints = FindObject("MainCharacter").IsWeaponRaised() || FindObject("MainCharacter").IsCrouching() || %resetConstraints;
+	
+	if (%resetConstraints)
+		$lastMainCharacterPackage = CVM_GetMainCharacterPackage();
+	
+	if (CVM_GetMainCharacterPackage() !$= $lastMainCharacterPackage)
+		Character_Switching();
+		
+	$lastMainCharacterPackage = CVM_GetMainCharacterPackage();
+	
+	return;
+}
+
+function Health_Recovery()
+{
+	if ($lastHealth <= 0)
+	{
+		$lastHealth = FindObject("MainCharacter").HEALTH;
+		$lastX = FindObject("MainCharacter").VectorGetX();
+		$lastZ = FindObject("MainCharacter").VectorGetZ();
+		
+		return;
+	}
+	
+	%refreshConstraints = IsMainCharacterKilledOrFlaggedForOnKilled() || FindObject("MainCharacter").IsWallCoverAvailable();
+	%refreshConstraints = FindObject("MainCharacter").IsSniping() || FindObject("MainCharacter").IsInCombat() || %refreshConstraints; 
+	%refreshConstraints = FindObject("MainCharacter").IsCharacterSeatedInVehicle() || (FindObject("MainCharacter").Speed() > 0.12357) || %refreshConstraints;
+	%refreshConstraints = FindObject("MainCharacter").IsCharacterInDangerousVehicleState() || FindObject("MainCharacter").IsCharacterInCar() || %refreshConstraints; 
+	%refreshConstraints = FindObject("MainCharacter").IsCharacterInBoat() || FindObject("MainCharacter").GetCurrentDrawnWeapon() || %refreshConstraints; 
+	%refreshConstraints = (FindObject("MainCharacter").GetAnimationRequestID() > 0) || (FindObject("MainCharacter").HEALTH <= 0) || %refreshConstraints;
+	%refreshConstraints = FindObject("MainCharacter").IsCrouchRun() || FindObject("MainCharacter").IsCrouching() || %refreshConstraints;
+	%refreshConstraints = FindObject("MainCharacter").IsWeaponRaised() || RageState.IsRageModeOn() || %refreshConstraints;
+	
+	if (%refreshConstraints)
+	{
+		$lastHealth = FindObject("MainCharacter").HEALTH;
+		$lastX = FindObject("MainCharacter").VectorGetX();
+		$lastZ = FindObject("MainCharacter").VectorGetZ();
+		
+		return;
+	}
+	
+	%triggerConstraints = (FindObject("MainCharacter").HEALTH > $lastHealth) && (FindObject("MainCharacter").VectorGetX() == $lastX);
+	%triggerConstraints = (FindObject("MainCharacter").VectorGetZ == $lastZ) && %triggerConstraints;
+	$lastX = FindObject("MainCharacter").VectorGetX();
+	$lastZ = FindObject("MainCharacter").VectorGetZ();
+	
+	if (%triggerConstraints)
+		FindObject("MainCharacter").RequestAnimation("Health_Recovery", "0");
+		
+	$lastHealth = FindObject("MainCharacter").HEALTH;
+	
+	return;
+}
+
+function Extended_Cutscenes(%condition)
+{
+	switch$(%condition)
+	{
+		case "front_intro_01":
+		
+			Global_Sound_Music();
+			GlobalSoundPlay("se_narrator", "front_intro_01");
+			Schedule("5430", "Phone_Calls", "se_10");
+			stxjlepenpm("-1762.534 7.812056 -1067.552", "-1762.534 7.812056 -1067.552", "-1785.6840 5.6525720 -1007.1230", "5429", "0", "0");
+			
+		case "front_intro_02":
+		
+			Global_Sound_Music();
+			GlobalSoundPlay("se_narrator", "front_intro_02");
+			Schedule("5772", "Phone_Calls", "se_15");
+			stxjlepenpm("-1749.065 5.389331 -449.8849", "-1749.065 5.389331 -449.8849", "-1775.8240 5.5173780 -481.64810", "5771", "0", "0");
+			
+		case "front_intro_03":
+		
+			Global_Sound_Music();
+			GlobalSoundPlay("se_narrator", "front_intro_03", "Invalid_Package");
+			stxjlepenpm("-2011.789 10.80356 -798.3", "-2011.789 10.80356 -798.3", "-1981.1240 8.5050200 -812.74980", "8064", "0", "0");
+			
+		case "front_intro_04":
+		
+			GlobalSoundPlay("se_narrator", "front_intro_04", "Invalid_Package");
+			
+		case "front_intro_05":
+		
+			Global_Sound_Music();
+			GlobalSoundPlay("se_narrator", "front_intro_05", "Invalid_Package");
+			stxjlepenpm("-1136.412 3.520705 350.603", "-1136.412 3.520705 350.603", "-1196.2640 3.7574950 363.68370", "4949", "0", "0");
+			
+		case "front_intro_06":
+		
+			Global_Sound_Music();
+			GlobalSoundPlay("se_narrator", "front_intro_06", "Invalid_Package");
+			stxjlepenpm("-1671.699 7.101069 -6.11557", "-1671.699 7.101069 -6.11557", "-1696.7850 5.0933360 -37.903800", "6261", "0", "0");
+			
+		case "front_intro_07":
+		
+			Global_Sound_Music();
+			GlobalSoundPlay("se_narrator", "front_intro_07", "Invalid_Package");
+			stxjlepenpm("-1543.357 7.398843 416.6853", "-1543.357 7.398843 416.6853", "-1529.6530 9.2984690 379.02020", "6837", "0", "0");
+			
+		case "front_intro_08":
+		
+			Global_Sound_Music();
+			GlobalSoundPlay("se_narrator", "front_intro_08", "Invalid_Package");
+			stxjlepenpm("-1810.635 8.619056 9.277945", "-1811.258 8.009608 9.916005", "-1838 5 27", "7979", "0", "0");
+			
+		case "front_intro_09":
+		
+			GlobalSoundPlay("se_narrator", "front_intro_09", "Invalid_Package");
+			
+		case "front_intro_10":
+		
+			Global_Sound_Music();
+			GlobalSoundPlay("se_narrator", "front_intro_10", "Invalid_Package");
+			stxjlepenpm("914.1619 4.692813 -781.227", "914.1619 4.692813 -781.227", "915.19290 3.6193310 -729.24160", "7883", "0", "0");
+			
+		case "front_intro_11":
+		
+			Global_Sound_Music();
+			GlobalSoundPlay("se_narrator", "front_intro_11", "Invalid_Package");
+			stxjlepenpm("1344.666 5.032087 -588.8283", "1344.666 5.032087 -588.8283", "1292.4740 3.1460980 -579.58720", "11413", "0", "0");
+			
+		case "front_intro_12":
+		
+			Global_Sound_Music();
+			GlobalSoundPlay("se_narrator", "front_intro_12", "Invalid_Package");
+			stxjlepenpm("1175 11 -265", "1175 11 -265", "1180 8 -257", "11947", "0", "0");
+			
+		case "front_intro_13":
+		
+			Global_Sound_Music();
+			GlobalSoundPlay("se_narrator", "front_intro_13", "Invalid_Package");
+			stxjlepenpm("1278.186 9.176807 66.87137", "1278.186 9.176807 66.87137", "1275.5410 7.2159330 111.34860", "9024", "0", "0");
+			
+		case "front_intro_14":
+		
+			Global_Sound_Music();
+			GlobalSoundPlay("se_narrator", "front_intro_14", "Invalid_Package");
+			stxjlepenpm("1481.658 9.323638 80.42175", "1481.658 9.323638 80.42175", "1439.7610 4.5142450 103.06670", "15051", "0", "0");
+			
+		case "front_intro_15":
+		
+			GlobalSoundPlay("se_narrator", "front_intro_15", "Invalid_Package");
+			
+		case "front_intro_16":
+		
+			Global_Sound_Music();
+			GlobalSoundPlay("se_narrator", "front_intro_16", "Invalid_Package");
+			stxjlepenpm("389.3834 5.321464 -1494.527", "389.3834 5.321464 -1494.527", "441.88890 3.4508890 -1509.4530", "10795", "0", "0");
+			
+		case "front_intro_17":
+		
+			Global_Sound_Music();
+			GlobalSoundPlay("se_narrator", "front_intro_17", "Invalid_Package");
+			stxjlepenpm("576.6646 4.568483 -1457.485", "576.6646 4.568483 -1457.485", "604.17820 3.5281700 -1422.0920", "10069", "0", "0");
+			
+		case "front_intro_18":
+		
+			Global_Sound_Music();
+			GlobalSoundPlay("se_narrator", "front_intro_18", "Invalid_Package");
+			stxjlepenpm("570.9304 6.021838 -1569.064", "570.9304 6.021838 -1569.064", "523.99950 4.0635360 -1572.3100", "9865", "0", "0");
+			
+		case "front_intros_19_22":
+		
+			%randomValue = stxidgjogdl("0", "3");
+			
+			Global_Sound_Music();
+			
+			switch$(%randomValue)
+			{
+				case "0":
+			
+					GlobalSoundPlay("se_narrator", "front_intro_19");
+					Schedule("9878", "PCM_PlayPhoneCall", "se18", "se18");
+					ScheduleAlways("35533", "HUD_SetGlobalSafeToActivate", "1");
+					stxjlepenpm("523.3339 5.623232 -1708.166", "523.3339 5.623232 -1708.166", "503.38600 3.3941250 -1675.3920", "9877", "0", "0");
+					
+				case "1":
+			
+					GlobalSoundPlay("se_narrator", "front_intro_20");
+					Schedule("6113", "PCM_PlayPhoneCall", "se18", "se18");
+					ScheduleAlways("31768", "HUD_SetGlobalSafeToActivate", "1");
+					stxjlepenpm("523.3339 5.623232 -1708.166", "523.3339 5.623232 -1708.166", "503.38600 3.3941250 -1675.3920", "6112", "0", "0");
+					
+				case "2":
+			
+					GlobalSoundPlay("se_narrator", "front_intro_21");
+					Schedule("5484", "PCM_PlayPhoneCall", "se18", "se18");
+					ScheduleAlways("31139", "HUD_SetGlobalSafeToActivate", "1");
+					stxjlepenpm("523.3339 5.623232 -1708.166", "523.3339 5.623232 -1708.166", "503.38600 3.3941250 -1675.3920", "5483", "0", "0");
+					
+				case "3":
+			
+					GlobalSoundPlay("se_narrator", "front_intro_22");
+					Schedule("8188", "PCM_PlayPhoneCall", "se18", "se18");
+					ScheduleAlways("33843", "HUD_SetGlobalSafeToActivate", "1");
+					stxjlepenpm("523.3339 5.623232 -1708.166", "523.3339 5.623232 -1708.166", "503.38600 3.3941250 -1675.3920", "8187", "0", "0");
+			}
+			
+		case "front_intro_23":
+		
+			GlobalSoundPlay("se_narrator", "front_intro_23", "Invalid_Package");
+			
+		case "front_intro_15_stxjlepenpm":
+			
+			stxjlepenpm("712 12 -303", "712 12 -303", FindObject("MainCharacter"), "12357", "1", "0");
+		
+		case "front_intro_23_stxjlepenpm":
+		
+			%cameraTarget = FindObject("MainCharacter");
+
+			ScheduleAlways("9999", "stxjlepenpm", "917.08500 4.4673980 -834.72110", "920.64560 12.598210 -828.86000", %cameraTarget, "5555", "1", "0");
+			
+		case "intimidate_front_00":
+		
+			GlobalSoundPlay("tony", "intimidate_front_00", "Invalid_Package");
+			
+		case "se_09_54":
+		
+			HUD_SetGlobalSafeToActivate("0");
+			SetBlockingActionMap("1");
+			Schedule("777", "GlobalSoundPlay", "se09", "se09");
+			Schedule("9777", "PCM_PlayPhoneCall", "se54", "se54");
+			Schedule("4222", "SetBlockingActionMap", "0");
+			Schedule("54325", "HUD_SetGlobalSafeToActivate", "1");
+			
+		case "sosa_phonecall_09":
+		
+			Schedule("6332", "PCM_PlayPhoneCall", "sosa_phonecall", "sosa_phonecall_09");
+			Schedule("19283", "HUD_SetGlobalSafeToActivate", "1");
+			
+		case "MNIS_S01_4_Cops_Are_Here":
+
+			Blackout("1", "0");
+			Schedule("1", "stxdfoahmdk", "MNIS_S01_4_Cops_Are_Here", "", "NIS");
+	}
+	
+	return;
+}
+
+function Phone_Calls(%condition)
+{
+	switch$(%condition)
+	{
+		case "se15":
+		
+			"MainCharacter".stxopmddkok();
+			
+			HUD_SetGlobalSafeToActivate("1");
+		
+		case "15_se":
+		
+			GlobalSoundPlay("tony", "hangupphone_00", "Phone_Calls_se15");
+		
+		case "se_15":
+		
+			if ("MainCharacter".stxphahdkkj("0"))
+				GlobalSoundPlay("se15", "se15", "Phone_Calls_15_se");
+		
+		case "se_10_11":
+		
+			"MainCharacter".stxopmddkok();
+			
+			HUD_SetGlobalSafeToActivate("1");
+		
+		case "se_11":
+			
+			GlobalSoundPlay("se11", "se11", "Phone_Calls_se_10_11");
+		
+		case "se_10":
+		
+			if ("MainCharacter".stxphahdkkj("0"))
+				GlobalSoundPlay("se10", "se10", "Phone_Calls_se_11");
+		
+		case "Support":
+		
+			if (Phone_Calls_Starting_Validity() && Phone_Calls_Support_Validity() && Phone_Calls_Validity() && "MainCharacter".stxphahdkkj("0"))
+			{
+				SoundFadeoutMix("duck_phonecall");
+
+				%mainCharacterPackage = CVM_GetMainCharacterPackage();
+				
+				switch$(%mainCharacterPackage)
+				{
+					case "MCP_Assassin":
+				
+						if (!FindObject("mcp_Driver"))
+						{
+							%mcpDriver = new AmbientSpawnObject();
+							%mcpDriver.desiredSpawnCount = "1";
+							%mcpDriver.spawnscriptclass = "DWHenchman";
+							%mcpDriver.spawnname = "mcp_Driver";
+							%mcpDriver.spawntemplate = "MCP_Driver";
+							%mcpDriver.usegangpriority = "1";
+							%mcpDriver.spawnweapon = "WeaponTemplateSniper";
+							%mcpDriver.cleanuppolicy = "ON_SPAWNER_DELETE";
+							%mcpDriver.deleteWhenCulled = "1";
+							%mcpDriver.spawndistance = "67";
+							%mcpDriver.totalSpawnCount = "1";
+						}
+						
+						if (!FindObject("mcp_Enforcer"))
+						{
+							%mcpEnforcer = new AmbientSpawnObject();
+							%mcpEnforcer.desiredSpawnCount = "1";
+							%mcpEnforcer.spawnscriptclass = "DWHenchman";
+							%mcpEnforcer.spawnname = "mcp_Enforcer";
+							%mcpEnforcer.spawntemplate = "MCP_Enforcer";
+							%mcpEnforcer.usegangpriority = "1";
+							%mcpEnforcer.spawnweapon = "WeaponTemplateMAC10Upgrade2";
+							%mcpEnforcer.cleanuppolicy = "ON_SPAWNER_DELETE";
+							%mcpEnforcer.deleteWhenCulled = "1";
+							%mcpEnforcer.spawndistance = "67";
+							%mcpEnforcer.totalSpawnCount = "1";
+						}
+						
+					case "MCP_Driver":
+				
+						if (!FindObject("mcp_Assassin"))
+						{
+							%mcpAssassin = new AmbientSpawnObject();
+							%mcpAssassin.desiredSpawnCount = "1";
+							%mcpAssassin.spawnscriptclass = "DWHenchman";
+							%mcpAssassin.spawnname = "mcp_Assassin";
+							%mcpAssassin.spawntemplate = "MCP_Assassin";
+							%mcpAssassin.usegangpriority = "1";
+							%mcpAssassin.spawnweapon = "WeaponTemplateUziUpgrade2";
+							%mcpAssassin.cleanuppolicy = "ON_SPAWNER_DELETE";
+							%mcpAssassin.deleteWhenCulled = "1";
+							%mcpAssassin.spawndistance = "67";
+							%mcpAssassin.totalSpawnCount = "1";	
+						}
+						
+						if (!FindObject("mcp_Enforcer"))
+						{
+							%mcpEnforcer = new AmbientSpawnObject();
+							%mcpEnforcer.desiredSpawnCount = "1";
+							%mcpEnforcer.spawnscriptclass = "DWHenchman";
+							%mcpEnforcer.spawnname = "mcp_Enforcer";
+							%mcpEnforcer.spawntemplate = "MCP_Enforcer";
+							%mcpEnforcer.usegangpriority = "1";
+							%mcpEnforcer.spawnweapon = "WeaponTemplateDesertEagle";
+							%mcpEnforcer.cleanuppolicy = "ON_SPAWNER_DELETE";
+							%mcpEnforcer.deleteWhenCulled = "1";
+							%mcpEnforcer.spawndistance = "67";
+							%mcpEnforcer.totalSpawnCount = "1";
+						}
+						
+					case "MCP_Enforcer":
+				
+						if (!FindObject("mcp_Assassin"))
+						{
+							%mcpAssassin = new AmbientSpawnObject();
+							%mcpAssassin.desiredSpawnCount = "1";
+							%mcpAssassin.spawnscriptclass = "DWHenchman";
+							%mcpAssassin.spawnname = "mcp_Assassin";
+							%mcpAssassin.spawntemplate = "MCP_Assassin";
+							%mcpAssassin.usegangpriority = "1";
+							%mcpAssassin.spawnweapon = "WeaponTemplateM16Mortar";
+							%mcpAssassin.cleanuppolicy = "ON_SPAWNER_DELETE";
+							%mcpAssassin.deleteWhenCulled = "1";
+							%mcpAssassin.spawndistance = "67";
+							%mcpAssassin.totalSpawnCount = "1";	
+						}
+						
+						if (!FindObject("mcp_Driver"))
+						{
+							%mcpDriver = new AmbientSpawnObject();
+							%mcpDriver.desiredSpawnCount = "1";
+							%mcpDriver.spawnscriptclass = "DWHenchman";
+							%mcpDriver.spawnname = "mcp_Driver";
+							%mcpDriver.spawntemplate = "MCP_Driver";
+							%mcpDriver.usegangpriority = "1";
+							%mcpDriver.spawnweapon = "WeaponTemplateAK47Upgrade2";
+							%mcpDriver.cleanuppolicy = "ON_SPAWNER_DELETE";
+							%mcpDriver.deleteWhenCulled = "1";
+							%mcpDriver.spawndistance = "67";
+							%mcpDriver.totalSpawnCount = "1";
+						}
+				}
+				
+				"MainCharacter".Schedule("3571", "stxopmddkok");
+			}
+		
+		case "Backup":
+		
+			if (CVM_GetMainCharacterPackage() $= "MCP_Assassin" || CVM_GetMainCharacterPackage() $= "MCP_Driver" || CVM_GetMainCharacterPackage() $= "MCP_Enforcer")
+			{
+				Phone_Calls("Support");
+				
+				return;
+			}
+			
+			if (DBGetReputationLevel() < 2)
+				return;
+			
+			switch$($phoneCallIteration)
+			{
+				case "-1":
+				
+					if (Phone_Calls_Starting_Validity() && Phone_Calls_Backup_Validity() && Phone_Calls_Validity() && "MainCharacter".stxphahdkkj("0"))
+					{
+						"MainCharacter".isInvincible = 1;
+						
+						HUD_SetGlobalSafeToActivate("0");
+						GlobalSoundPlay("tony", "answerphone_00", "Phone_Calls_Backup");
+						SoundFadeoutMix("duck_phonecall");
+						
+						$phoneCallIteration = "0";
+					}
+					
+				case "0":
+				
+					if (Phone_Calls_Validity())
+					{
+						GlobalSoundPlay("tony", "call_backup_00", "Phone_Calls_Backup");
+						
+						$phoneCallIteration = "1";
+					}
+					
+					else
+					{
+						$phoneCallIteration = "7";
+						
+						Phone_Calls_Backup();
+					}
+					
+				case "1":
+				
+					if (Phone_Calls_Validity())
+					{
+						if (!FindObject("mcp_Assassin"))
+						{
+							GlobalSoundPlay("se_tony_henchman_01", "backupcall_00", "Phone_Calls_Backup");
+							
+							$phoneCallIteration = "2";
+							%mcpAssassin = new AmbientSpawnObject();
+							%mcpAssassin.desiredSpawnCount = "1";
+							%mcpAssassin.spawnscriptclass = "DWHenchman";
+							%mcpAssassin.spawnname = "mcp_Assassin";
+							%mcpAssassin.spawntemplate = "MCP_Assassin";
+							%mcpAssassin.usegangpriority = "1";
+							%mcpAssassin.spawnweapon = "WeaponTemplateAK47Upgrade2";
+							%mcpAssassin.cleanuppolicy = "ON_SPAWNER_DELETE";
+							%mcpAssassin.deleteWhenCulled = "1";
+							%mcpAssassin.spawndistance = "67";
+							%mcpAssassin.totalSpawnCount = "1";
+						}
+					
+						else
+						{
+							$phoneCallIteration = "2";
+							
+							Phone_Calls_Backup();
+						}
+					}
+					
+					else
+					{
+						$phoneCallIteration = "7";
+						
+						Phone_Calls_Backup();
+					}
+					
+				case "2":
+				
+					if (Phone_Calls_Validity())
+					{
+						if (!FindObject("mcp_Driver"))
+						{
+							GlobalSoundPlay("se_tony_henchman_02", "backupcall_00", "Phone_Calls_Backup");
+						
+							$phoneCallIteration = "3";
+							%mcpDriver = new AmbientSpawnObject();
+							%mcpDriver.desiredSpawnCount = "1";
+							%mcpDriver.spawnscriptclass = "DWHenchman";
+							%mcpDriver.spawnname = "mcp_Driver";
+							%mcpDriver.spawntemplate = "MCP_Driver";
+							%mcpDriver.usegangpriority = "1";
+							%mcpDriver.spawnweapon = "WeaponTemplateM16Mortar";
+							%mcpDriver.cleanuppolicy = "ON_SPAWNER_DELETE";
+							%mcpDriver.deleteWhenCulled = "1";
+							%mcpDriver.spawndistance = "67";
+							%mcpDriver.totalSpawnCount = "1";
+						}
+					
+						else
+						{
+							$phoneCallIteration = "3";
+							
+							Phone_Calls_Backup();
+						}	
+					}
+					
+					else
+					{
+						$phoneCallIteration = "7";
+						
+						Phone_Calls_Backup();
+					}
+					
+				case "3":
+				
+					if (Phone_Calls_Validity())
+					{
+						if (!FindObject("mcp_Enforcer"))
+						{
+							GlobalSoundPlay("se_tony_henchman_03", "backupcall_00", "Phone_Calls_Backup");
+						
+							$phoneCallIteration = "4";
+							%mcpEnforcer = new AmbientSpawnObject();
+							%mcpEnforcer.desiredSpawnCount = "1";
+							%mcpEnforcer.spawnscriptclass = "DWHenchman";
+							%mcpEnforcer.spawnname = "mcp_Enforcer";
+							%mcpEnforcer.spawntemplate = "MCP_Enforcer";
+							%mcpEnforcer.usegangpriority = "1";
+							%mcpEnforcer.spawnweapon = "WeaponTemplateDesertEagle";
+							%mcpEnforcer.cleanuppolicy = "ON_SPAWNER_DELETE";
+							%mcpEnforcer.deleteWhenCulled = "1";
+							%mcpEnforcer.spawndistance = "67";
+							%mcpEnforcer.totalSpawnCount = "1";
+						}
+					
+						else
+						{
+							$phoneCallIteration = "4";
+							
+							Phone_Calls_Backup();
+						}	
+					}
+					
+					else
+					{
+						$phoneCallIteration = "7";
+						
+						Phone_Calls_Backup();
+					}
+					
+				case "4":
+				
+					if (Phone_Calls_Validity())
+					{
+						if (!FindObject("char_Temp_Dying_Henchman"))
+						{
+							GlobalSoundPlay("se_tony_henchman_04", "backupcall_00", "Phone_Calls_Backup");
+						
+							$phoneCallIteration = "5";
+							%charTempDyingHenchman = new AmbientSpawnObject();
+							%charTempDyingHenchman.desiredSpawnCount = "1";
+							%charTempDyingHenchman.spawnscriptclass = "DWHenchman";
+							%charTempDyingHenchman.spawnname = "char_Temp_Dying_Henchman";
+							%charTempDyingHenchman.spawntemplate = "CharTemp_Dying_Henchman";
+							%charTempDyingHenchman.usegangpriority = "1";
+							%charTempDyingHenchman.spawnweapon = "WeaponTemplateUziUpgrade3";
+							%charTempDyingHenchman.cleanuppolicy = "ON_SPAWNER_DELETE";
+							%charTempDyingHenchman.deleteWhenCulled = "1";
+							%charTempDyingHenchman.spawndistance = "67";
+							%charTempDyingHenchman.totalSpawnCount = "1";
+						}
+					
+						else
+						{
+							$phoneCallIteration = "5";
+							
+							Phone_Calls_Backup();
+						}
+					}
+					
+					else
+					{
+						$phoneCallIteration = "7";
+						
+						Phone_Calls_Backup();
+					}
+					
+				case "5":
+				
+					if (Phone_Calls_Validity())
+					{
+						if (!FindObject("char_Temp_M_Henchman_05"))
+						{
+							GlobalSoundPlay("se_tony_henchman_05", "backupcall_00", "Phone_Calls_Backup");
+						
+							$phoneCallIteration = "6";
+							%charTempMHenchman05 = new AmbientSpawnObject();
+							%charTempMHenchman05.desiredSpawnCount = "1";
+							%charTempMHenchman05.spawnscriptclass = "DWHenchman";
+							%charTempMHenchman05.spawnname = "char_Temp_M_Henchman_05";
+							%charTempMHenchman05.spawntemplate = "CharTemp_M_Henchman05";
+							%charTempMHenchman05.usegangpriority = "1";
+							%charTempMHenchman05.spawnweapon = "WeaponTemplateMAC10Upgrade3";
+							%charTempMHenchman05.cleanuppolicy = "ON_SPAWNER_DELETE";
+							%charTempMHenchman05.deleteWhenCulled = "1";
+							%charTempMHenchman05.spawndistance = "67";
+							%charTempMHenchman05.totalSpawnCount = "1";
+						}
+					
+						else
+						{
+							$phoneCallIteration = "6";
+							
+							Phone_Calls_Backup();
+						}
+					}
+					
+					else
+					{
+						$phoneCallIteration = "7";
+						
+						Phone_Calls_Backup();
+					}
+					
+				case "6":
+				
+					if (Phone_Calls_Validity())
+					{
+						GlobalSoundPlay("tony", "hangupphone_00", "Phone_Calls_Backup");
+						
+						$phoneCallIteration = "7";
+					}
+					
+					else
+					{
+						$phoneCallIteration = "7";
+						
+						Phone_Calls_Backup();
+					}
+					
+				case "7":
+				
+					$phoneCallIteration = "-1";
+					
+					"MainCharacter".stxopmddkok();
+					"MainCharacter".isInvincible = 0;
+					
+					HUD_SetGlobalSafeToActivate("1");
+			}
+		
+		case "Gang_Bribe":
+		
+			if (CVM_GetMainCharacterPackage() $= "MCP_Assassin" || CVM_GetMainCharacterPackage() $= "MCP_Driver" || CVM_GetMainCharacterPackage() $= "MCP_Enforcer")
+			{
+				Phone_Calls("Support");
+				
+				return;
+			}
+			
+			if (DBGetReputationLevel() < 2)
+				return;
+		
+			switch$($phoneCallIteration)
+			{
+				case "-1":
+				
+					%triggerValid = Phone_Calls_Starting_Validity() && Phone_Calls_Validity() && (stxogkpfppp() > 0) && (stxlahgjnip() > 0.0);
+					
+					if (%triggerValid && "MainCharacter".stxphahdkkj("0"))
+					{
+						"MainCharacter".isInvincible = 1;
+						
+						HUD_SetGlobalSafeToActivate("0");
+						GlobalSoundPlay("tony", "answerphone_00", "Phone_Calls_Gang_Bribe");
+						SoundFadeoutMix("duck_phonecall");
+						
+						$phoneCallIteration = "0";
+					}
+					
+				case "0":
+				
+					if (Phone_Calls_Validity())
+					{
+						GlobalSoundPlay("miami_cop_01", "donutbribe_00", "Phone_Calls_Gang_Bribe");
+						
+						$phoneCallIteration = "1";
+					}
+					
+					else
+					{
+						$phoneCallIteration = "18";
+						
+						Phone_Calls_Gang_Bribe();
+					}
+					
+				case "1":
+				
+					if (Phone_Calls_Validity())
+					{
+						GlobalSoundPlay("tony", "genmale_friend_00", "Phone_Calls_Gang_Bribe");
+						
+						$phoneCallIteration = "2";
+					}
+					
+					else
+					{
+						$phoneCallIteration = "18";
+						
+						Phone_Calls_Gang_Bribe();
+					}
+					
+				case "2":
+				
+					if (Phone_Calls_Validity())
+					{
+						GlobalSoundPlay("miami_cop_02", "donutbribe_00", "Phone_Calls_Gang_Bribe");
+						
+						$phoneCallIteration = "3";
+					}
+					
+					else
+					{
+						$phoneCallIteration = "18";
+						
+						Phone_Calls_Gang_Bribe();
+					}
+					
+				case "3":
+				
+					if (Phone_Calls_Validity())
+					{
+						GlobalSoundPlay("tony", "greet_00", "Phone_Calls_Gang_Bribe");
+						
+						$phoneCallIteration = "4";
+					}
+					
+					else
+					{
+						$phoneCallIteration = "18";
+						
+						Phone_Calls_Gang_Bribe();
+					}
+					
+				case "4":
+				
+					if (Phone_Calls_Validity())
+					{
+						GlobalSoundPlay("white_vice_cop", "cop_bribe_00", "Phone_Calls_Gang_Bribe");
+						
+						$phoneCallIteration = "5";
+					}
+					
+					else
+					{
+						$phoneCallIteration = "18";
+						
+						Phone_Calls_Gang_Bribe();
+					}
+					
+				case "5":
+				
+					if (Phone_Calls_Validity())
+					{
+						GlobalSoundPlay("tony", "buy_off_approach_00", "Phone_Calls_Gang_Bribe");
+						
+						$phoneCallIteration = "6";
+					}
+					
+					else
+					{
+						$phoneCallIteration = "18";
+						
+						Phone_Calls_Gang_Bribe();
+					}
+					
+				case "6":
+				
+					if (Phone_Calls_Validity())
+					{
+						GlobalSoundPlay("white_vice_cop", "cop_bribe_00", "Phone_Calls_Gang_Bribe");
+						
+						$phoneCallIteration = "7";
+					}
+					
+					else
+					{
+						$phoneCallIteration = "18";
+						
+						Phone_Calls_Gang_Bribe();
+					}
+					
+				case "7":
+				
+					if (Phone_Calls_Validity())
+					{
+						GlobalSoundPlay("tony", "buy_off_00", "Phone_Calls_Gang_Bribe");
+						
+						$phoneCallIteration = "8";
+					}
+					
+					else
+					{
+						$phoneCallIteration = "18";
+						
+						Phone_Calls_Gang_Bribe();
+					}
+					
+				case "8":
+				
+					if (Phone_Calls_Validity())
+					{
+						GlobalSoundPlay("white_vice_cop", "cop_bribe_00", "Phone_Calls_Gang_Bribe");
+						
+						$phoneCallIteration = "9";
+					}
+					
+					else
+					{
+						$phoneCallIteration = "18";
+						
+						Phone_Calls_Gang_Bribe();
+					}
+					
+				case "9":
+				
+					if (Phone_Calls_Validity())
+					{
+						GlobalSoundPlay("tony", "decline_00", "Phone_Calls_Gang_Bribe");
+						
+						$phoneCallIteration = "10";
+					}
+					
+					else
+					{
+						$phoneCallIteration = "18";
+						
+						Phone_Calls_Gang_Bribe();
+					}
+					
+				case "10":
+				
+					if (Phone_Calls_Validity())
+					{
+						GlobalSoundPlay("white_vice_cop", "cop_bribe_00", "Phone_Calls_Gang_Bribe");
+						
+						$phoneCallIteration = "11";
+					}
+					
+					else
+					{
+						$phoneCallIteration = "18";
+						
+						Phone_Calls_Gang_Bribe();
+					}
+					
+				case "11":
+				
+					if (Phone_Calls_Validity())
+					{
+						GlobalSoundPlay("tony", "convince_00", "Phone_Calls_Gang_Bribe");
+						
+						$phoneCallIteration = "12";
+					}
+					
+					else
+					{
+						$phoneCallIteration = "18";
+						
+						Phone_Calls_Gang_Bribe();
+					}
+					
+				case "12":
+				
+					if (Phone_Calls_Validity())
+					{
+						GlobalSoundPlay("white_vice_cop", "cop_bribe_00", "Phone_Calls_Gang_Bribe");
+						
+						$phoneCallIteration = "13";
+					}
+					
+					else
+					{
+						$phoneCallIteration = "18";
+						
+						Phone_Calls_Gang_Bribe();
+					}
+					
+				case "13":
+				
+					if (Phone_Calls_Validity())
+					{
+						GlobalSoundPlay("tony", "accept_00", "Phone_Calls_Gang_Bribe");
+						
+						$phoneCallIteration = "14";
+					}
+					
+					else
+					{
+						$phoneCallIteration = "18";
+						
+						Phone_Calls_Gang_Bribe();
+					}
+					
+				case "14":
+				
+					if (Phone_Calls_Validity())
+					{
+						GlobalSoundPlay("miami_cop_01", "donutbribedone_00", "Phone_Calls_Gang_Bribe");
+						
+						$phoneCallIteration = "15";
+					}
+					
+					else
+					{
+						$phoneCallIteration = "18";
+						
+						Phone_Calls_Gang_Bribe();
+					}
+					
+				case "15":
+				
+					if (Phone_Calls_Validity())
+					{
+						GlobalSoundPlay("tony", "cop_heat_pay_down_00", "Phone_Calls_Gang_Bribe");
+						
+						$phoneCallIteration = "16";
+					}
+					
+					else
+					{
+						$phoneCallIteration = "18";
+						
+						Phone_Calls_Gang_Bribe();
+					}
+					
+				case "16":
+				
+					if (Phone_Calls_Validity())
+					{
+						GlobalSoundPlay("miami_cop_02", "donutbribedone_00", "Phone_Calls_Gang_Bribe");
+						
+						$phoneCallIteration = "17";
+					}
+					
+					else
+					{
+						$phoneCallIteration = "18";
+						
+						Phone_Calls_Gang_Bribe();
+					}
+					
+				case "17":
+				
+					if (Phone_Calls_Validity())
+					{
+						$phoneCallIteration = "18";
+						%deductionRate = (stxogkpfppp() >= stxlahgjnip()) ? -stxlahgjnip() : -stxogkpfppp();
+						%bonusRate = (stxogkpfppp() >= stxlahgjnip()) ? stxlahgjnip() : stxogkpfppp();
+						
+						GlobalSoundPlay("tony", "hangupphone_00", "Phone_Calls_Gang_Bribe");
+						DBChangeCleanCash(%deductionRate);
+						DBChangeGangHeat(%deductionRate);
+						DBChangeBalls(%bonusRate);
+					}
+					
+					else
+					{
+						$phoneCallIteration = "18";
+						
+						Phone_Calls_Gang_Bribe();
+					}
+					
+				case "18":
+				
+					$phoneCallIteration = "-1";
+					
+					"MainCharacter".stxopmddkok();
+					"MainCharacter".isInvincible = 0;
+					
+					HUD_SetGlobalSafeToActivate("1");
+			}
+		
+		case "Cop_Bribe":
+		
+			if (CVM_GetMainCharacterPackage() $= "MCP_Assassin" || CVM_GetMainCharacterPackage() $= "MCP_Driver" || CVM_GetMainCharacterPackage() $= "MCP_Enforcer")
+			{
+				Phone_Calls("Support");
+				
+				return;
+			}
+			
+			if (DBGetReputationLevel() < 2)
+				return;
+		
+			switch$($phoneCallIteration)
+			{
+				case "-1":
+				
+					if (Phone_Calls_Starting_Validity() && Phone_Calls_Validity() && (stxogkpfppp() > 0) && (stxadlbimkj() > 0) && "MainCharacter".stxphahdkkj("0"))
+					{
+						"MainCharacter".isInvincible = 1;
+						
+						HUD_SetGlobalSafeToActivate("0");
+						GlobalSoundPlay("tony", "answerphone_00", "Phone_Calls_Cop_Bribe");
+						SoundFadeoutMix("duck_phonecall");
+						
+						$phoneCallIteration = "0";
+					}
+					
+				case "0":
+				
+					if (Phone_Calls_Validity())
+					{
+						GlobalSoundPlay("miami_cop_01", "donutbribe_00", "Phone_Calls_Cop_Bribe");
+						
+						$phoneCallIteration = "1";
+					}
+					
+					else
+					{
+						$phoneCallIteration = "18";
+						
+						Phone_Calls_Cop_Bribe();
+					}
+					
+				case "1":
+				
+					if (Phone_Calls_Validity())
+					{
+						GlobalSoundPlay("tony", "genmale_friend_00", "Phone_Calls_Cop_Bribe");
+						
+						$phoneCallIteration = "2";
+					}
+					
+					else
+					{
+						$phoneCallIteration = "18";
+						
+						Phone_Calls_Cop_Bribe();
+					}
+					
+				case "2":
+				
+					if (Phone_Calls_Validity())
+					{
+						GlobalSoundPlay("miami_cop_02", "donutbribe_00", "Phone_Calls_Cop_Bribe");
+						
+						$phoneCallIteration = "3";
+					}
+					
+					else
+					{
+						$phoneCallIteration = "18";
+						
+						Phone_Calls_Cop_Bribe();
+					}
+					
+				case "3":
+				
+					if (Phone_Calls_Validity())
+					{
+						GlobalSoundPlay("tony", "greet_00", "Phone_Calls_Cop_Bribe");
+						
+						$phoneCallIteration = "4";
+					}
+					
+					else
+					{
+						$phoneCallIteration = "18";
+						
+						Phone_Calls_Cop_Bribe();
+					}
+					
+				case "4":
+				
+					if (Phone_Calls_Validity())
+					{
+						GlobalSoundPlay("white_vice_cop", "cop_bribe_00", "Phone_Calls_Cop_Bribe");
+						
+						$phoneCallIteration = "5";
+					}
+					
+					else
+					{
+						$phoneCallIteration = "18";
+						
+						Phone_Calls_Cop_Bribe();
+					}
+					
+				case "5":
+				
+					if (Phone_Calls_Validity())
+					{
+						GlobalSoundPlay("tony", "buy_off_approach_00", "Phone_Calls_Cop_Bribe");
+						
+						$phoneCallIteration = "6";
+					}
+					
+					else
+					{
+						$phoneCallIteration = "18";
+						
+						Phone_Calls_Cop_Bribe();
+					}
+					
+				case "6":
+				
+					if (Phone_Calls_Validity())
+					{
+						GlobalSoundPlay("white_vice_cop", "cop_bribe_00", "Phone_Calls_Cop_Bribe");
+						
+						$phoneCallIteration = "7";
+					}
+					
+					else
+					{
+						$phoneCallIteration = "18";
+						
+						Phone_Calls_Cop_Bribe();
+					}
+					
+				case "7":
+				
+					if (Phone_Calls_Validity())
+					{
+						GlobalSoundPlay("tony", "buy_off_00", "Phone_Calls_Cop_Bribe");
+						
+						$phoneCallIteration = "8";
+					}
+					
+					else
+					{
+						$phoneCallIteration = "18";
+						
+						Phone_Calls_Cop_Bribe();
+					}
+					
+				case "8":
+				
+					if (Phone_Calls_Validity())
+					{
+						GlobalSoundPlay("white_vice_cop", "cop_bribe_00", "Phone_Calls_Cop_Bribe");
+						
+						$phoneCallIteration = "9";
+					}
+					
+					else
+					{
+						$phoneCallIteration = "18";
+						
+						Phone_Calls_Cop_Bribe();
+					}
+					
+				case "9":
+				
+					if (Phone_Calls_Validity())
+					{
+						GlobalSoundPlay("tony", "decline_00", "Phone_Calls_Cop_Bribe");
+						
+						$phoneCallIteration = "10";
+					}
+					
+					else
+					{
+						$phoneCallIteration = "18";
+						
+						Phone_Calls_Cop_Bribe();
+					}
+					
+				case "10":
+				
+					if (Phone_Calls_Validity())
+					{
+						GlobalSoundPlay("white_vice_cop", "cop_bribe_00", "Phone_Calls_Cop_Bribe");
+						
+						$phoneCallIteration = "11";
+					}
+					
+					else
+					{
+						$phoneCallIteration = "18";
+						
+						Phone_Calls_Cop_Bribe();
+					}
+					
+				case "11":
+				
+					if (Phone_Calls_Validity())
+					{
+						GlobalSoundPlay("tony", "convince_00", "Phone_Calls_Cop_Bribe");
+						
+						$phoneCallIteration = "12";
+					}
+					
+					else
+					{
+						$phoneCallIteration = "18";
+						
+						Phone_Calls_Cop_Bribe();
+					}
+					
+				case "12":
+				
+					if (Phone_Calls_Validity())
+					{
+						GlobalSoundPlay("white_vice_cop", "cop_bribe_00", "Phone_Calls_Cop_Bribe");
+						
+						$phoneCallIteration = "13";
+					}
+					
+					else
+					{
+						$phoneCallIteration = "18";
+						
+						Phone_Calls_Cop_Bribe();
+					}
+					
+				case "13":
+				
+					if (Phone_Calls_Validity())
+					{
+						GlobalSoundPlay("tony", "accept_00", "Phone_Calls_Cop_Bribe");
+						
+						$phoneCallIteration = "14";
+					}
+					
+					else
+					{
+						$phoneCallIteration = "18";
+						
+						Phone_Calls_Cop_Bribe();
+					}
+					
+				case "14":
+				
+					if (Phone_Calls_Validity())
+					{
+						GlobalSoundPlay("miami_cop_01", "donutbribedone_00", "Phone_Calls_Cop_Bribe");
+						
+						$phoneCallIteration = "15";
+					}
+					
+					else
+					{
+						$phoneCallIteration = "18";
+						
+						Phone_Calls_Cop_Bribe();
+					}
+					
+				case "15":
+				
+					if (Phone_Calls_Validity())
+					{
+						GlobalSoundPlay("tony", "cop_heat_pay_down_00", "Phone_Calls_Cop_Bribe");
+						
+						$phoneCallIteration = "16";
+					}
+					
+					else
+					{
+						$phoneCallIteration = "18";
+						
+						Phone_Calls_Cop_Bribe();
+					}
+					
+				case "16":
+				
+					if (Phone_Calls_Validity())
+					{
+						GlobalSoundPlay("miami_cop_02", "donutbribedone_00", "Phone_Calls_Cop_Bribe");
+						
+						$phoneCallIteration = "17";
+					}
+					
+					else
+					{
+						$phoneCallIteration = "18";
+						
+						Phone_Calls_Cop_Bribe();
+					}
+					
+				case "17":
+				
+					if (Phone_Calls_Validity())
+					{
+						$phoneCallIteration = "18";
+						%deductionRate = (stxogkpfppp() >= stxadlbimkj()) ? -stxadlbimkj() : -stxogkpfppp();
+						%bonusRate = (stxogkpfppp() >= stxadlbimkj()) ? stxadlbimkj() : stxogkpfppp();
+						
+						GlobalSoundPlay("tony", "hangupphone_00", "Phone_Calls_Cop_Bribe");
+						DBChangeCleanCash(%deductionRate);
+						DBChangeCopHeat(%deductionRate);
+						DBChangeBalls(%bonusRate);
+					}
+					
+					else
+					{
+						$phoneCallIteration = "18";
+						
+						Phone_Calls_Cop_Bribe();
+					}
+					
+				case "18":
+				
+					$phoneCallIteration = "-1";
+					
+					"MainCharacter".stxopmddkok();
+					"MainCharacter".isInvincible = 0;
+					
+					HUD_SetGlobalSafeToActivate("1");
+			}
+	}
+	
+	return;
+}
+
+function Reputation_Levelling_Up()
+{
+	%reputationLevellingUp = "Levelup".stxgodcoghl || "Levelup".stxodbhkaao || "Levelup".stxdejblbno || "Levelup_Islands".stxgodcoghl;
+	%reputationLevellingUp = "Levelup_Islands".stxodbhkaao || "Levelup_Islands".stxdejblbno || %reputationLevellingUp;
+	
+	return %reputationLevellingUp;
+}
+
+function Sosa_Phone_Calls()
+{
+	%sosaPhoneCalls = GlobalSoundIsPlaying("sosa_phonecall", "sosa_phonecall_01") || GlobalSoundIsPlaying("sosa_phonecall", "sosa_phonecall_02");
+	%sosaPhoneCalls = GlobalSoundIsPlaying("sosa_phonecall", "sosa_phonecall_03") || %sosaPhoneCalls;
+	%sosaPhoneCalls = GlobalSoundIsPlaying("sosa_phonecall", "sosa_phonecall_04") || %sosaPhoneCalls;
+	%sosaPhoneCalls = GlobalSoundIsPlaying("sosa_phonecall", "sosa_phonecall_05") || %sosaPhoneCalls;
+	%sosaPhoneCalls = GlobalSoundIsPlaying("sosa_phonecall", "sosa_phonecall_06") || %sosaPhoneCalls;
+	%sosaPhoneCalls = GlobalSoundIsPlaying("sosa_phonecall", "sosa_phonecall_07") || %sosaPhoneCalls;
+	%sosaPhoneCalls = GlobalSoundIsPlaying("sosa_phonecall", "sosa_phonecall_08") || %sosaPhoneCalls;
+	%sosaPhoneCalls = GlobalSoundIsPlaying("sosa_phonecall", "sosa_phonecall_09") || %sosaPhoneCalls;
+	
+	return %sosaPhoneCalls;
+}
+
+function Phone_Calls_Starting_Validity()
+{
+	%phoneCallsStartingValidity = (FindObject("MainCharacter").GetAnimationRequestID() == 0) && (FindObject("MainCharacter").GetRemainingVocalMs() == -1);
+	%phoneCallsStartingValidity = (GlobalSoundGetCurrentMs() == -1) && ((GetGameTime() - $phoneCallValidityTimer) > 5555) && %phoneCallsStartingValidity;
+	
+	return %phoneCallsStartingValidity;
+}
+
+function Phone_Calls_Validity()
+{
+	%phoneCallsValidity = CVM_IsMainCharacterPackageLoaded() && (CallAnyNISGetCurrent() $= "") && !IsMainCharacterKilledOrFlaggedForOnKilled() && !IsTeleporting();
+	%phoneCallsValidity = !MGM_GetVisibilityPoints() && !MGM_VisibilityIsFucked() && !MGM_VisibilityIsRed() && !NISIsPlaying() && %phoneCallsValidity;
+	%phoneCallsValidity = !ScreenFxTransitionIsBlackedOut() && !TutorialManager_IsActive() && !HUD_IsMissionInAnyCrazyStates() && %phoneCallsValidity;
+	%phoneCallsValidity = (FindObject("MainCharacter").GetAnimationRequestID() > -1) && FindObject("MainCharacter").HEALTH && %phoneCallsValidity;
+	
+	return %phoneCallsValidity;
+}
+
+function Phone_Calls_Backup_Validity()
+{
+	%phoneCallsBackupValidity = !FindObject("mcp_Assassin") || !FindObject("mcp_Driver") || !FindObject("mcp_Enforcer") || !FindObject("char_Temp_M_Henchman_05");
+	%phoneCallsBackupValidity = !FindObject("char_Temp_Dying_Henchman") || %phoneCallsBackupValidity;
+	
+	return %phoneCallsBackupValidity;
+}
+
+function Phone_Calls_se15()
+{
+	Phone_Calls("se15");
+	
+	return;
+}
+
+function Phone_Calls_15_se()
+{
+	Phone_Calls("15_se");
+	
+	return;
+}
+
+function Phone_Calls_se_10_11()
+{
+	Phone_Calls("se_10_11");
+	
+	return;
+}
+
+function Phone_Calls_se_11()
+{
+	Phone_Calls("se_11");
+	
+	return;
+}
+
+function Phone_Calls_Support_Validity()
+{
+	%phoneCallsSupportValidity = !FindObject("mcp_Assassin") || !FindObject("mcp_Driver") || !FindObject("mcp_Enforcer");
+	
+	return %phoneCallsSupportValidity;
+}
+
+function Phone_Calls_Cop_Bribe()
+{
+	Phone_Calls("Cop_Bribe");
+	
+	return;
+}
+
+function Phone_Calls_Gang_Bribe()
+{
+	Phone_Calls("Gang_Bribe");
+	
+	return;
+}
+
+function Phone_Calls_Backup()
+{
+	Phone_Calls("Backup");
+	
+	return;
+}
+
+function T01_Mission_Active()
+{
+	$T01MissionActive = 1;
+	$T01Timer = GetGameTime();
+	$T01QuoteTimer = stxidgjogdl("2357", "7531");
+	
+	return;
+}
+
+function T01_Narrator_Instructions(%condition)
+{
+	switch$(%condition)
+	{
+		case "objectives_01_17":
+		
+			$T01MissionStart = 1;
+		
+			SoundFadeinMix("duck_phonecall");
+			HUD_SetGlobalSafeToActivate("0");
+			Schedule("777", "GlobalSoundPlay", "se_narrator", "objective_01");
+			Schedule("3054", "GlobalSoundPlay", "se_narrator", "objective_17");
+			Schedule("4128", "SoundFadeoutMix", "duck_phonecall");
+			Schedule("4129", "HUD_SetGlobalSafeToActivate", "1");
+			Schedule("4130", "T01_Mission_Active");
+			
+		case "objective_05":
+		
+			$T01WeaponPickedUp = 1;
+		
+			SoundFadeinMix("duck_phonecall");
+			GlobalSoundPlay("se_narrator", "objective_05");
+			Schedule("959", "SoundFadeoutMix", "duck_phonecall");
+			
+		case "objective_06":
+		
+			SoundFadeinMix("duck_phonecall");
+			GlobalSoundPlay("se_narrator", "objective_06");
+			Schedule("2183", "SoundFadeoutMix", "duck_phonecall");
+			
+		case "objectives_07_11_12_13_18":
+		
+			%randomValue = stxidgjogdl("0", "4");
+			
+			switch(%randomValue)
+			{
+				case 0:
+				
+					SoundFadeinMix("duck_phonecall");
+					GlobalSoundPlay("se_narrator", "objective_07");
+					Schedule("1885", "SoundFadeoutMix", "duck_phonecall");
+					
+				case 1:
+				
+					SoundFadeinMix("duck_phonecall");
+					GlobalSoundPlay("se_narrator", "objective_11");
+					Schedule("3213", "SoundFadeoutMix", "duck_phonecall");
+					
+				case 2:
+				
+					SoundFadeinMix("duck_phonecall");
+					GlobalSoundPlay("se_narrator", "objective_12");
+					Schedule("2455", "SoundFadeoutMix", "duck_phonecall");
+					
+				case 3:
+				
+					SoundFadeinMix("duck_phonecall");
+					GlobalSoundPlay("se_narrator", "objective_13");
+					Schedule("3202", "SoundFadeoutMix", "duck_phonecall");
+					
+				case 4:
+				
+					SoundFadeinMix("duck_phonecall");
+					GlobalSoundPlay("se_narrator", "objective_18");
+					Schedule("2791", "SoundFadeoutMix", "duck_phonecall");
+			}
+			
+		case "objective_08":
+		
+			SoundFadeinMix("duck_phonecall");
+			GlobalSoundPlay("se_narrator", "objective_08");
+			Schedule("1151", "SoundFadeoutMix", "duck_phonecall");
+			
+		case "objective_09":
+				
+			SoundFadeinMix("duck_phonecall");
+			GlobalSoundPlay("se_narrator", "objective_09");
+			Schedule("1927", "SoundFadeoutMix", "duck_phonecall");
+			
+		case "objective_10":
+				
+			SoundFadeinMix("duck_phonecall");
+			GlobalSoundPlay("se_narrator", "objective_10");
+			Schedule("4482", "SoundFadeoutMix", "duck_phonecall");
+			
+		case "objectives_14_15":
+		
+			%randomValue = stxidgjogdl("0", "1");
+			
+			switch(%randomValue)
+			{
+				case 0:
+				
+					SoundFadeinMix("duck_phonecall");
+					GlobalSoundPlay("se_narrator", "objective_14");
+					Schedule("5314", "SoundFadeoutMix", "duck_phonecall");
+					
+				case 1:
+				
+					SoundFadeinMix("duck_phonecall");
+					GlobalSoundPlay("se_narrator", "objective_15");
+					Schedule("2247", "SoundFadeoutMix", "duck_phonecall");
+			}
+			
+		case "objective_16":
+		
+			$T01MissionComplete = 0;
+		
+			SetBlockingActionMap("1");
+			GlobalSoundRequestMusic("A22Music", "combat_break", "nonlooping", "immediate", "10", "0");
+			CVM_KillAll();
+			Schedule("3571", "SoundFadeinMix", "duck_phonecall");
+			Schedule("3572", "GlobalSoundPlay", "se_narrator", "objective_16");
+			Schedule("8489", "SoundFadeoutMix", "duck_phonecall");
+			Schedule("8490", "SetBlockingActionMap", "0");
+			
+		case "objectives":
+			
+			$T01Timer = GetGameTime();
+			$T01QuoteTimer = stxidgjogdl("2357", "7531");
+		
+			if ($gRageModeEnabled)
+			{
+				T01_Narrator_Instructions("objectives_14_15");
+				
+				return;
+			}
+			
+			if (FindObject("T01_PistolPickup") && !FindObject("MainCharacter").GetCurrentDrawnWeapon() && ($T01WeaponPickedUp == -1))
+			{
+				T01_Narrator_Instructions("objective_06");
+				
+				return;
+			}
+			
+			%targetsPresent = FindObject("T01_Target1A").GetCurrentHealth() || FindObject("T01_Target1B").GetCurrentHealth();
+			%targetsPresent = %targetsPresent || FindObject("T01_Target1C").GetCurrentHealth() || FindObject("T01_Target2A").GetCurrentHealth();
+			%targetsPresent = %targetsPresent || FindObject("T01_Target2B").GetCurrentHealth() || FindObject("T01_Target2C").GetCurrentHealth();
+			%targetsPresent = %targetsPresent || FindObject("T01_Dipshit").GetCurrentDrawnWeapon() || FindObject("T01_BallsGuy").GetCurrentDrawnWeapon();
+			%targetsPresent = %targetsPresent || FindObject("T01_RageGuy").GetCurrentDrawnWeapon() || FindObject("T01_MEMEME").GetCurrentDrawnWeapon();
+			%targetsPresent = (%targetsPresent || FindObject("T01_CannonFodder").GetCurrentDrawnWeapon()) && FindObject("MainCharacter").GetCurrentDrawnWeapon();
+			
+			if (%targetsPresent)
+			{
+				if ($wallCoverStateTracker $= "1")
+				{
+					T01_Narrator_Instructions("objective_10");
+					
+					return;
+				}
+				
+				if ($wallCoverStateTracker $= "0")
+				{
+					T01_Narrator_Instructions("objective_09");
+					
+					return;
+				}
+			
+				if (FindObject("MainCharacter").IsWallCoverAvailable())
+				{
+					T01_Narrator_Instructions("objective_08");
+					
+					return;
+				}
+				
+				T01_Narrator_Instructions("objectives_07_11_12_13_18");
+				
+				return;
+			}
+			
+			if (FindObject("MainCharacter").IsWallCoverAvailable())
+			{
+				T01_Narrator_Instructions("objective_08");
+				
+				return;
+			}
+			
+			%randomValue = stxidgjogdl("0", "2");
+			
+			switch(%randomValue)
+			{
+				case 0:
+				
+					SoundFadeinMix("duck_phonecall");
+					GlobalSoundPlay("se_narrator", "objective_02");
+					Schedule("674", "SoundFadeoutMix", "duck_phonecall");
+					
+				case 1:
+				
+					SoundFadeinMix("duck_phonecall");
+					GlobalSoundPlay("se_narrator", "objective_03");
+					Schedule("1917", "SoundFadeoutMix", "duck_phonecall");
+					
+				case 2:
+				
+					SoundFadeinMix("duck_phonecall");
+					GlobalSoundPlay("se_narrator", "objective_04");
+					Schedule("3095", "SoundFadeoutMix", "duck_phonecall");
+			}
+	}
+	
+	return;
+}
+
+function Character_Switched(%condition)
+{
+	switch$(%condition)
+	{
+		case "Switching_Done":
+		
+			$gPauseCharacters = 0;
+			$gPauseVehicles = 0;
+			
+			"MainCharacter".isInvincible = 0;
+
+			SoundFadeoutMix("duck_phonecall"); 
+			SetBlockingActionMap("0"); 
+			HUD_SetGlobalSafeToActivate("1");
+			
+		case "Narrator_Quotes_Triggered":
+		
+			$gPauseCharacters = 1;
+			$gPauseVehicles = 1;
+			
+			"MainCharacter".isInvincible = 1;
+			
+			Global_Sound_Music();
+			SetBlockingActionMap("1"); 
+			SoundFadeinMix("duck_phonecall"); 
+			HUD_SetGlobalSafeToActivate("0");
+			
+		case "Valid_Package":
+		
+			HUD_SetGlobalSafeToActivate("0");
+			SetBlockingActionMap("1");
+			Global_Sound_Music();
+			Schedule("1235", "HUD_SetGlobalSafeToActivate", "1");
+			Schedule("1235", "SetBlockingActionMap", "0");
+			Schedule("777", "PCM_PlayPhoneCall", "tony", "call_cleaner_00");
+			
+		case "Miami_Package":
+		
+			%randomValue = stxidgjogdl("0", "19");
+			
+			if ((DBGetReputationLevel() > 4) && (%randomValue < 12))
+			{
+				HUD_SetGlobalSafeToActivate("0");
+				SetBlockingActionMap("1");
+				Global_Sound_Music();
+				Schedule("1235", "HUD_SetGlobalSafeToActivate", "1");
+				Schedule("1235", "SetBlockingActionMap", "0");
+				
+				switch(%randomValue)
+				{
+					case 0:
+					
+						Schedule("777", "PCM_PlayPhoneCall", "se28", "se28");
+						
+					case 1:
+					
+						Schedule("777", "PCM_PlayPhoneCall", "se28b", "se28b");
+						
+					case 2:
+					
+						Schedule("777", "PCM_PlayPhoneCall", "se29", "se29");
+						
+					case 3:
+					
+						Schedule("777", "PCM_PlayPhoneCall", "se30", "se30");
+						
+					case 4:
+					
+						Schedule("777", "PCM_PlayPhoneCall", "se31", "se31");
+						
+					case 5:
+					
+						Schedule("777", "PCM_PlayPhoneCall", "se32", "se32");
+						
+					case 6:
+					
+						Schedule("777", "PCM_PlayPhoneCall", "se33", "se33");
+						
+					case 7:
+					
+						Schedule("777", "PCM_PlayPhoneCall", "se34", "se34");
+						
+					case 8:
+					
+						Schedule("777", "PCM_PlayPhoneCall", "se35", "se35");
+						
+					case 9:
+					
+						Schedule("777", "PCM_PlayPhoneCall", "se36", "se36");
+						
+					case 10:
+					
+						Schedule("777", "PCM_PlayPhoneCall", "se37", "se37");
+						
+					case 11:
+					
+						Schedule("777", "PCM_PlayPhoneCall", "se39", "se39");
+				}
+				
+				return;
+			}
+			
+			Character_Switched("Narrator_Quotes_Triggered");
+			
+			%randomValue = stxidgjogdl("0", "7");
+			
+			switch(%randomValue)
+			{
+				case 0:
+				
+					Schedule("777", "GlobalSoundPlay", "se_narrator", "ee_00", "Invalid_Package");
+					
+				case 1:
+				
+					Schedule("777", "GlobalSoundPlay", "se_narrator", "introduction_00", "Invalid_Package");
+					
+				case 2:
+				
+					Schedule("777", "GlobalSoundPlay", "se_narrator", "mojo", "Invalid_Package");
+					
+				case 3:
+				
+					Schedule("777", "GlobalSoundPlay", "se_narrator", "shoutout_01", "Invalid_Package");
+					
+				case 4:
+				
+					Schedule("777", "GlobalSoundPlay", "se_narrator", "shoutout_02", "Invalid_Package");
+					
+				case 5:
+				
+					Schedule("777", "GlobalSoundPlay", "se_narrator", "shoutout_03", "Invalid_Package");
+					
+				case 6:
+				
+					Schedule("777", "GlobalSoundPlay", "se_narrator", "shoutout_04", "Invalid_Package");
+					
+				case 7:
+				
+					Schedule("777", "GlobalSoundPlay", "se_narrator", "shoutout_05", "Invalid_Package");
+			}
+			
+		case "Island_Package":
+		
+			%randomValue = stxidgjogdl("0", "2");
+			
+			if ((DBGetReputationLevel() > 4) && (%randomValue < 3))
+			{
+				HUD_SetGlobalSafeToActivate("0");
+				SetBlockingActionMap("1");
+				Global_Sound_Music();
+				Schedule("1235", "HUD_SetGlobalSafeToActivate", "1");
+				Schedule("1235", "SetBlockingActionMap", "0");
+				
+				switch(%randomValue)
+				{
+					case 0:
+					
+						Schedule("777", "PCM_PlayPhoneCall", "se49", "se49");
+						
+					case 1:
+					
+						Schedule("777", "PCM_PlayPhoneCall", "se50", "se50");
+						
+					case 2:
+					
+						Schedule("777", "PCM_PlayPhoneCall", "se51", "se51");
+				}
+				
+				return;
+			}
+		
+			%randomValue = stxidgjogdl("0", "5");
+			
+			Character_Switched("Narrator_Quotes_Triggered");
+			
+			switch(%randomValue)
+			{
+				case 0:
+				
+					Schedule("777", "GlobalSoundPlay", "se57", "se57", "Invalid_Package");
+					
+				case 1:
+				
+					Schedule("777", "GlobalSoundPlay", "se58", "se58", "Invalid_Package");
+					
+				case 2:
+				
+					Schedule("777", "GlobalSoundPlay", "se59", "se59", "Invalid_Package");
+					
+				case 3:
+				
+					Schedule("777", "GlobalSoundPlay", "se60", "se60", "Invalid_Package");
+					
+				case 4:
+				
+					Schedule("777", "GlobalSoundPlay", "se61", "se61", "Invalid_Package");
+					
+				case 5:
+				
+					Schedule("777", "GlobalSoundPlay", "se62", "se62", "Invalid_Package");
+			}
+	}
+	
+	return;
+}
+
+function Character_Switching()
+{
+	if ((CVM_GetMainCharacterPackage() $= "MCP_Assassin") || (CVM_GetMainCharacterPackage() $= "MCP_Driver") || (CVM_GetMainCharacterPackage() $= "MCP_Enforcer"))
+	{	
+		Character_Switched("Valid_Package");
+		
+		return;
+	}
+		
+	if (DBGetReputationLevel() < 2)
+		return;
+
+	%islandPackage = ((CVM_GetMainCharacterPackage() $= "MCP_HawaiianShadesTony") || (CVM_GetMainCharacterPackage() $= "MCP_HawaiianTony"));
+	%islandPackage = ((CVM_GetMainCharacterPackage() $= "MCP_SandyShadesTony") || (CVM_GetMainCharacterPackage() $= "MCP_SandyTony") || %islandPackage);
+	
+	if (%islandPackage)
+	{
+		Character_Switched("Island_Package");
+		
+		return;
+	}
+		
+	%miamiPackage = (!%islandPackage && (CVM_GetMainCharacterPackage() !$= "MCP_Assassin") && (CVM_GetMainCharacterPackage() !$= "MCP_Driver"));
+	%miamiPackage = (%miamiPackage && (CVM_GetMainCharacterPackage() !$= "MCP_Enforcer"));
+	
+	if (%miamiPackage)
+		Character_Switched("Miami_Package");
+	
+	return;
+}
+
+function Invalid_Package()
+{
+	Character_Switched("Switching_Done");
+	
+	return;
+}
+
+function Global_Sound_Music()
+{
+	%randomValue = stxidgjogdl("0", "4");
+	
+	switch(%randomValue)
+	{
+		case 0:
+		
+			GlobalSoundRequestMusic("AncillaryMusic", "mission_accept", "nonlooping", "immediate", "10", "0");
+			
+		case 1:
+		
+			GlobalSoundRequestMusic("FrontMusic", "trav_car_04_fin", "nonlooping", "immediate", "10", "0");
+			
+		case 2:
+		
+			GlobalSoundRequestMusic("FrontMusic", "trav_car_gen_fin", "nonlooping", "immediate", "10", "0");
+			
+		case 3:
+		
+			GlobalSoundRequestMusic("S09Music", "success", "nonlooping", "immediate", "10", "0");
+			
+		case 4:
+		
+			GlobalSoundRequestMusic("StorehouseMusic", "mission_success", "nonlooping", "immediate", "10", "0");
+	}	
+	
+	return;
+}
+
+ScarfaceEX();
+
+return;

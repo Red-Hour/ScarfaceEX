@@ -1,0 +1,394 @@
+struct VehicleFrameContext
+{
+    int vehicleSeatState,
+		health;
+	
+	bool isBoat,
+		 isCar,
+		 insideVehicle,
+		 passenger,
+		 reversing;
+};
+
+VehicleFrameContext BuildVehicleFrameContext(CharacterObject* character)
+{
+    VehicleFrameContext ctx;
+    ctx.isBoat = Is_Character_In_Boat(character);
+    ctx.isCar = Is_Character_In_Car(character);
+    ctx.insideVehicle = (ctx.isBoat || ctx.isCar);
+    ctx.vehicleSeatState = Get_Vehicle_State(character);
+    ctx.passenger = Get_Vehicle_Passenger_State(character);
+    ctx.reversing = Land_Vehicle_Reverse_Driving(character);
+    ctx.health = GetCharacterHealth(character);
+    
+	return ctx;
+}
+
+void ProcessDamageAnim(CharacterObject* character, DamageAnimState& state, const VehicleFrameContext& ctx, unsigned long now)
+{
+    int currentHealth = ctx.health;
+
+    if (currentHealth <= 0)
+        return;
+
+    if (state.lastHealth == -1)
+    {
+        state.lastHealth = currentHealth;
+        
+		return;
+    }
+
+    bool healthDropped = (currentHealth < state.lastHealth),
+         stillAlive = (currentHealth > 1);
+
+    if (healthDropped && stillAlive)
+        state.animPlayed = false;
+
+    if (!state.animPlayed && healthDropped && stillAlive)
+    {
+        state.damageTaken = true;
+        state.lastTimer = now;
+
+        if (ctx.vehicleSeatState)
+        {
+            if (!ctx.isBoat && ctx.reversing)
+            {
+                const std::string& anim = g_Config.landVehicleDamageDriverReverse;
+                state.animPlayed = true;
+                
+				PlayAnimation(character, anim, 0);
+            }
+
+            else
+            {
+                const std::string& anim = ctx.isBoat ? g_Config.waterVehicleDamageDriver : g_Config.landVehicleDamageDriver;
+                state.animPlayed = true;
+                
+				PlayAnimation(character, anim, 0);
+            }
+        }
+
+        else
+        {
+            const std::string& anim = ctx.isBoat ? g_Config.waterVehicleDamagePassenger : g_Config.landVehicleDamagePassenger;
+            state.animPlayed = true;
+            
+			PlayAnimation(character, anim, 0);
+        }
+    }
+
+    state.lastHealth = currentHealth;
+}
+
+void NPCVehicleDamageCheck(CharacterObject* npc, int i, const VehicleFrameContext& ctx, unsigned long now)
+{
+    if (i >= MAX_NPC_DAMAGE)
+        return;
+
+    if (!npc)
+        return;
+
+    bool Vehicle_Detected = ctx.insideVehicle;
+
+    int Injuries_50_Caliber = Get_50_Calibers(npc),
+        Driver_Passenger = Actual_Vehicle_Intention(npc),
+        Weapon_Damage = Damage_Weapon(npc);
+
+    if (!Vehicle_Detected || Injuries_50_Caliber || !Driver_Passenger || Weapon_Damage == -1)
+    {
+        g_NPCDamageStates[i].Reset();
+        
+		return;
+    }
+
+    ProcessDamageAnim(npc, g_NPCDamageStates[i], ctx, now);
+}
+
+void NPC50CalDamageCheck(CharacterObject* npc, int i, const VehicleFrameContext& ctx)
+{
+    if (i >= MAX_NPC_50CAL)
+        return;
+
+    if (!npc)
+        return;
+
+    int get_50_calibers = Get_50_Calibers(npc);
+
+    if (!get_50_calibers)
+    {
+        g_NPC50CalStates[i].Reset();
+        
+		return;
+    }
+
+    int currentHealth = ctx.health;
+
+    if (currentHealth <= 0)
+        return;
+
+    DamageAnimState& state = g_NPC50CalStates[i];
+
+    if (state.lastHealth == -1)
+    {
+        state.lastHealth = currentHealth;
+        
+		return;
+    }
+
+    bool healthDropped = (currentHealth < state.lastHealth),
+         stillAlive = (currentHealth > 1);
+
+    if (healthDropped && stillAlive)
+        state.animPlayed = false;
+
+    if (!state.animPlayed && healthDropped && stillAlive)
+    {
+        PlayAnimation(npc, g_Config.Damage_50_Calibers, 0);
+        
+		state.animPlayed = true;
+    }
+
+    state.lastHealth = currentHealth;
+}
+
+void NPCVehicleAnimationCheck(CharacterObject* npc, int i, const VehicleFrameContext& ctx)
+{
+    if (i >= MAX_NPCS)
+        return;
+
+    if (!npc)
+        return;
+
+    bool isBoat = ctx.isBoat,
+         isCar = ctx.isCar;
+
+    if (!isBoat && !isCar)
+        return;
+
+    int seatingPosition = ctx.vehicleSeatState,
+        Weapon_State = Get_Weapon_State(npc),
+        Shooting = Vehicle_Shooting(npc),
+        currentVocalMS = (Get_Remaining_Vocal_Ms(npc) != -1);
+
+    bool Reversing = ctx.reversing,
+		 refreshFunction = (seatingPosition != 1 || Weapon_State || Shooting || currentVocalMS || g_NPCDamageStates[i].damageTaken);
+
+    if (refreshFunction)
+    {
+        g_NPCStates[i].Reset();
+        return;
+    }
+
+    __try
+    {
+        NPCAnimState& state = g_NPCStates[i];
+        float curX = *(float*)((uintptr_t)npc + 0x34 + 48),
+              curZ = *(float*)((uintptr_t)npc + 0x34 + 56),
+              dx = curX - state.lastX,
+              dz = curZ - state.lastZ;
+
+        bool isMoving = ((dx * dx + dz * dz) > 0.01f);
+        state.lastX = curX;
+        state.lastZ = curZ;
+
+        if (isMoving)
+        {
+            if (!state.activePlayed)
+            {
+                if (!isBoat && Reversing && isCar)
+                {
+                    const std::string& anim = g_Config.landVehicleDriverReverse;
+                    state.activePlayed = true;
+                    state.idlePlayed = false;
+                    
+					PlayAnimation(npc, anim, 0);
+                }
+
+                else
+                {
+                    const std::string& anim = isBoat ? g_Config.waterVehicleDriver : g_Config.landVehicleDriver;
+                    state.activePlayed = true;
+                    state.idlePlayed = false;
+                    
+					PlayAnimation(npc, anim, 0);
+                }
+            }
+        }
+
+        else
+        {
+            if (!state.idlePlayed)
+            {
+                const std::string& anim = isBoat ? g_Config.waterVehicleIdles : g_Config.landVehicleIdles;
+                state.idlePlayed = true;
+                state.activePlayed = false;
+                
+				PlayAnimation(npc, anim, 0);
+            }
+        }
+    }
+
+    __except(EXCEPTION_EXECUTE_HANDLER)
+    {
+        return;
+    }
+}
+
+void VehicleAnimationResetCheck(CharacterObject* character, int i, const VehicleFrameContext& ctx)
+{
+    if (!character)
+        return;
+
+    bool Inside_Water_Vehicle = ctx.isBoat,
+         Inside_Land_Vehicle = ctx.isCar,
+         Inside_Vehicle = ctx.insideVehicle;
+
+    if (!Inside_Vehicle)
+        return;
+
+    int animationRequestID = Get_Animation_Request_ID(character);
+
+    if (animationRequestID)
+        return;
+
+    bool reset = (!animationRequestID),
+         landVehicleDriverReversing = ctx.reversing,
+         driver = (ctx.vehicleSeatState != 0),
+         passenger = ctx.passenger;
+
+    if (reset)
+    {
+        if (driver)
+        {
+            if (Inside_Land_Vehicle)
+            {
+                const std::string& anim = landVehicleDriverReversing ? g_Config.landVehicleDriverReverse : g_Config.landVehicleDriver;
+                
+				PlayAnimation(character, anim, 0);
+            }
+
+            if (Inside_Water_Vehicle)
+            {
+                const std::string& anim = g_Config.waterVehicleDriver;
+                
+				PlayAnimation(character, anim, 0);
+            }
+        }
+
+        if (passenger)
+        {
+            if (Inside_Land_Vehicle)
+            {
+                const std::string& anim = g_Config.landVehicleIdles;
+                
+				PlayAnimation(character, anim, 0);
+            }
+
+            if (Inside_Water_Vehicle)
+            {
+                const std::string& anim = g_Config.waterVehiclePassenger;
+                
+				PlayAnimation(character, anim, 0);
+            }
+        }
+    }
+}
+
+void CharacterVehicleSpeakingCheck(CharacterObject* characters, int i, unsigned long now, const VehicleFrameContext& ctx)
+{
+    if (i >= MAX_SPEAKERS)
+        return;
+
+    if (!characters)
+        return;
+
+    bool Inside_Water_Vehicle = ctx.isBoat,
+         Inside_Land_Vehicle = ctx.isCar,
+         Inside_Vehicle = ctx.insideVehicle;
+
+    if (!Inside_Vehicle)
+        return;
+
+    bool landVehicleDriverReversing = ctx.reversing,
+         driver = (ctx.vehicleSeatState != 0),
+         passenger = ctx.passenger,
+         currentVocalMS = (Get_Remaining_Vocal_Ms(characters) == -1),
+         timerValid = g_NPCDamageStates[i].damageTaken ? ((now - g_NPCDamageStates[i].lastTimer) > 2753UL) : true;
+
+    if (timerValid)
+        g_NPCDamageStates[i].damageTaken = false;
+
+    bool triggerValid = (CSIVS_Struct[i].lastVocalMS && !currentVocalMS && timerValid);
+
+    if (triggerValid)
+    {
+        if (driver)
+        {
+            if (Inside_Land_Vehicle)
+            {
+                const std::string& anim = landVehicleDriverReversing ? g_Config.landVehicleDriverReverseTalking : g_Config.landVehicleDriverTalking;
+                
+				PlayAnimation(characters, anim, 0);
+            }
+
+            if (Inside_Water_Vehicle)
+            {
+                const std::string& anim = g_Config.waterVehicleDriverTalking;
+                
+				PlayAnimation(characters, anim, 0);
+            }
+        }
+
+        if (passenger)
+        {
+            if (Inside_Land_Vehicle)
+            {
+                const std::string& anim = g_Config.landVehiclePassengerTalking;
+                
+				PlayAnimation(characters, anim, 0);
+            }
+
+            if (Inside_Water_Vehicle)
+            {
+                const std::string& anim = g_Config.waterVehiclePassengerTalking;
+                
+				PlayAnimation(characters, anim, 0);
+            }
+        }
+    }
+
+    CSIVS_Struct[i].lastVocalMS = currentVocalMS;
+}
+
+void Character_Object_Master_Tracker(void** pData, int count)
+{
+    if (!pData || count <= 0)
+        return;
+
+    unsigned long now = GetTickCount();
+    bool doVehicleAnimCheck = (now - g_LastNPCAnimCheck >= NPC_ANIM_INTERVAL);
+
+    if (doVehicleAnimCheck)
+        g_LastNPCAnimCheck = now;
+
+    CharacterObject* mainChar = GetPlayer();
+
+    for (int i = 0; i < count; i++)
+    {
+        CharacterObject* character = (CharacterObject*)pData[i];
+		
+        if (!character)
+            continue;
+
+        VehicleFrameContext ctx = BuildVehicleFrameContext(character);
+		bool npcVehicleAnimationCheckValid = doVehicleAnimCheck && (character != mainChar);
+
+        if (npcVehicleAnimationCheckValid)
+            NPCVehicleAnimationCheck(character, i, ctx);
+
+        NPCVehicleDamageCheck(character, i, ctx, now);
+        NPC50CalDamageCheck(character, i, ctx);
+        VehicleAnimationResetCheck(character, i, ctx);
+        CharacterVehicleSpeakingCheck(character, i, now, ctx);
+    }
+}
