@@ -29,13 +29,14 @@ This project was made possible by these contributors to the Scarface: The World 
 
 This mod introduces high-quality gameplay improvements while maintaining a "vanilla" feel. It is designed for maximum compatibility.
 
-> **Installation Note:** To avoid issues, install this mod **last**, after all your other favorite modifications are in place.
+> **Installation Note: To avoid issues, install this mod last, after all your other favorite modifications are in place**.
+> **No need to install the 1.0.0.2 US Patch separately; it’s integrated into the mod.**
+> **Please completely reinstall the game if you have an older version of ScarfaceEX**.
 
 **Important Notes:**
 
 - This mod includes all features from my previous work, **Gore Mechanics Revamped**. I recommend trying that mod first to see the evolution of these features.
 - This version was rebuilt from scratch to fix the messy code management of the original release.
-- **Please completely reinstall the game if you have an older version of ScarfaceEX**.
 
 ---
 
