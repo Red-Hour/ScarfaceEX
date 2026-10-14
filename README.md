@@ -2,7 +2,7 @@
 
 A vanilla plus upgrade for Scarface! Fixing countless animation bugs, restoring beta content and much more...
 
-![ScarfaceEX](https://raw.githubusercontent.com/Least-Professor/ScarfaceEX/main/ScarfaceEX_W_3.png)
+![ScarfaceEX](https://github.com/Red-Hour/ScarfaceEX/blob/main/ScarfaceEX_W2.png)
 
 #### Recommended Patches
 
