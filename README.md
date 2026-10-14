@@ -1,10 +1,10 @@
-#### ScarfaceEX
+### ScarfaceEX
 
 A vanilla plus upgrade for Scarface! Fixing countless animation bugs, restoring beta content and much more...
 
 ![ScarfaceEX](https://github.com/Red-Hour/ScarfaceEX/blob/main/ScarfaceEX_W2.png)
 
-#### Recommended Patches
+### Recommended Patches
 
 To ensure the best experience, please install these patches (available on Nexus Mods / GitHub):
 
@@ -14,7 +14,7 @@ To ensure the best experience, please install these patches (available on Nexus 
 
 ---
 
-#### Mod Credits
+### Mod Credits
 
 This project was made possible by these contributors to the Scarface: The World Is Yours modding scene:
 
@@ -27,7 +27,7 @@ This project was made possible by these contributors to the Scarface: The World 
 
 ---
 
-#### Description
+### Description
 
 This mod introduces high-quality gameplay improvements while maintaining a "vanilla" feel. It is designed for maximum compatibility.
 
@@ -41,7 +41,7 @@ This mod introduces high-quality gameplay improvements while maintaining a "vani
 
 ---
 
-#### Changelog
+### Changelog
 
 ```
 23 - 15.12.2025
