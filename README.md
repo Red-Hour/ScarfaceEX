@@ -6,9 +6,9 @@ A vanilla plus upgrade for Scarface! Fixing countless animation bugs, restoring 
 
 ## Recommended Patches
 
-To ensure the best experience, please install these patches (available on Nexus Mods / GitHub):
+To ensure the best experience, please install these patches (available on Nexus Mods \ GitHub):
 
-- [GangstaPatch](https://github.com/GangstaTeam/GangstaPatch) - Restores console-exclusive visual effects (blood, windshield effects) and fixes performance/graphical issues.
+- [GangstaPatch](https://github.com/GangstaTeam/GangstaPatch) - Restores console-exclusive visual effects (blood, windshield effects) and fixes performance \ graphical issues.
 - [Remastered Project](https://www.nexusmods.com/scarfacetheworldisyours/mods/6) (Neonix Modding Team) - Updates models, textures, and sounds to be more lore-accurate.
 - [Radical Entertainment Official Patch](https://www.nexusmods.com/scarfacetheworldisyours/mods/10) (1.0.0.2 U.S.) - Updates the game executable and fixes most base-game bugs.
 
@@ -37,7 +37,7 @@ This mod introduces high-quality gameplay improvements while maintaining a "vani
 
 - This mod includes all features from my previous work, **Gore Mechanics Revamped**. I recommend trying that mod first to see the evolution of these features.
 - This version was rebuilt from scratch to fix the messy code management of the original release.
-- Please completely reinstall the game if you have an older version of ScarfaceEX.
+- **Please completely reinstall the game if you have an older version of ScarfaceEX**.
 
 ---
 
