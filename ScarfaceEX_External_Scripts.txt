@@ -3,6 +3,8 @@ $blockFrontManagerMissionSuccessfulActionMap = "";
 
 $extendedMissionQuotesDelay = stxidgjogdl("2357", "7531");
 $extendedMissionQuotesTimer = GetGameTime();
+$extendedVehicularRadioTimer = GetGameTime();
+$extendedVehicularRadioIteration = "-1";
 
 $lastRageMode = -1;
 $lastRageModeTimer = GetGameTime();
@@ -40,6 +42,7 @@ $ScarfaceEX_DefaultCutscenes = "0";
 $ScarfaceEX_DisableEverything = "0";
 $ScarfaceEX_DisableBriberyAndSupportPhoneCalls = "0";
 $ScarfaceEX_DisableVehicleIdles = "0";
+$ScarfaceEX_DisableExtendedVehicularRadio = "0";
 
 function ScarfaceEX()
 {
@@ -104,10 +107,40 @@ function ScarfaceEX()
 
 		if ($ScarfaceEX_DefaultCombatTutorial $= "0")
 			T01_Extended();
+			
+		if ($ScarfaceEX_DisableExtendedVehicularRadio $= "0")
+			Extended_Vehicular_Radio();
 	}
 
 	Phone_Calls_Invalidity();
 	ScheduleAlways("67", "ScarfaceEX");
+	
+	return;
+}
+
+function Extended_Vehicular_Radio()
+{
+	%constraints = FindObject("MainCharacter").IsCharacterInDangerousVehicleState() || (!FindObject("MainCharacter").IsCharacterInBoat() && 
+				   !FindObject("MainCharacter").IsCharacterInCar() && !FindObject("MainCharacter").IsCharacterSeatedInVehicle());
+				   
+	if (%constraints || MGM_GetMissionActive() || IsMissionRunning() || MGM_GetVisibilityPoints() || MGM_VisibilityIsFucked() || MGM_VisibilityIsRed())
+	{
+		$extendedVehicularRadioIteration = "-1";
+		$extendedVehicularRadioTimer = GetGameTime();
+	}
+	
+	%constraint = (FindObject("MainCharacter").IsCharacterInBoat() || FindObject("MainCharacter").IsCharacterInCar()) && 
+				  FindObject("MainCharacter").IsCharacterSeatedInVehicle() && ($extendedVehicularRadioIteration $= "-1");
+				  
+	if (%constraint)
+		$extendedVehicularRadioIteration = "0";
+		
+	if (($extendedVehicularRadioIteration $= "0") && ((GetGameTime() - $extendedVehicularRadioTimer) > 7532))
+	{
+		$extendedVehicularRadioIteration = "1";
+		
+		GlobalSoundRequestMusic("FrontMusic", "devilmusic", "nonlooping", "immediate", "10", "0");
+	}
 	
 	return;
 }
