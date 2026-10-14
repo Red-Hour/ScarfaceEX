@@ -10,8 +10,6 @@ To ensure the best experience, please install these patches (available on Nexus 
 
 - [GangstaPatch](https://github.com/GangstaTeam/GangstaPatch) - Restores console-exclusive visual effects (blood, windshield effects) and fixes performance \ graphical issues.
 - [Remastered Project](https://www.nexusmods.com/scarfacetheworldisyours/mods/6) (Neonix Modding Team) - Updates models, textures, and sounds to be more lore-accurate.
-- [Radical Entertainment Official Patch](https://www.nexusmods.com/scarfacetheworldisyours/mods/10) (1.0.0.2 U.S.) - Updates the game executable and fixes most base-game bugs.
-
 ---
 
 ## Mod Credits
