@@ -1,7 +1,6 @@
 #include <Windows.h>
 #include <Psapi.h>
 #include <Xinput.h>
-#define DIRECTINPUT_VERSION 0x0800
 #include <dinput.h>
 #include <fstream>
 #include <string>
@@ -13,6 +12,7 @@
 #pragma comment(lib, "dinput8.lib")
 #pragma comment(lib, "dxguid.lib")
 
+#define DIRECTINPUT_VERSION 0x0800
 #define ADDR_VehicleState 0x007BC51C
 #define CONFIG_FILE "ScarfaceEX_Configuration.ini"
 #define README_FILE "ScarfaceEX_Instructions.txt"
@@ -2078,7 +2078,7 @@ void CheckDirectInput(CharacterObject* player, unsigned long now)
 } 
 
 // Vehicles' Idles' Cancellation Input Detection
-bool IsAnyRawInputActive()
+bool IsBinaryInputActive()
 {
     // Keyboard Detection
     for (int vk = 0x08; vk <= 0xFE; vk++)
@@ -2112,26 +2112,6 @@ bool IsAnyRawInputActive()
         // Buttons
         if (gp.wButtons != 0)
             return true;
-
-        // Triggers
-        if (gp.bLeftTrigger > 30) 
-			return true;
-        
-		if (gp.bRightTrigger > 30) 
-			return true;
-
-        // Sticks
-        if (abs(gp.sThumbLX) > XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE)  
-			return true;
-        
-		if (abs(gp.sThumbLY) > XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE)  
-			return true;
-        
-		if (abs(gp.sThumbRX) > XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE) 
-			return true;
-        
-		if (abs(gp.sThumbRY) > XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE) 
-			return true;
     }
 
     // Direct-Input Detection
@@ -2145,25 +2125,6 @@ bool IsAnyRawInputActive()
             for (int i = 0; i < 128; i++)
                 if (js.rgbButtons[i] & 0x80) 
 					return true;
-
-            // Axes
-            if (abs((int)js.lX - 32767) > 3000) 
-				return true;
-            
-			if (abs((int)js.lY - 32767) > 3000) 
-				return true;
-            
-			if (abs((int)js.lZ - 32767) > 3000) 
-				return true;
-            
-			if (abs((int)js.lRx - 32767) > 3000) 
-				return true;
-            
-			if (abs((int)js.lRy - 32767) > 3000) 
-				return true;
-            
-			if (abs((int)js.lRz - 32767) > 3000) 
-				return true;
         }
     }
 
@@ -2268,7 +2229,7 @@ void CheckVehicleAnimation(CharacterObject* player)
 		g_VehicleAnim.wasInputActive = false;
     }
 
-    bool inputActive = IsAnyRawInputActive();
+    bool inputActive = IsBinaryInputActive();
 	
 	if (g_VehicleAnim.wasInputActive && !inputActive)
         g_VehicleAnim.inputReleasedAt = now;
